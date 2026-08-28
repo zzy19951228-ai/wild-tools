@@ -5,43 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>野生工具铺｜日常有个麻烦？我试着把它做成工具</title>
 <style>
-:root{--bg0:#0B1220;--bg1:#101B30;--surface:#141F33;--surface2:#1A2740;--text:#E7EDF7;--dim:#C7D3E8;--muted:#8A94A8;--accent:#4D6BFE;--accent2:#5AC8FA;--border:#31435F;--divider:#243654}
+:root{
+  --bg:#0A0F1C;--surface:rgba(148,163,198,.055);--surface-2:rgba(148,163,198,.09);
+  --line:rgba(148,163,198,.14);--line-soft:rgba(148,163,198,.08);
+  --text:#EEF2FA;--dim:#A9B4C9;--muted:#66738C;
+  --accent:#5B7FFF;--accent-2:#38BDF8;--grad:linear-gradient(120deg,#5B7FFF,#7B5FFF);
+  --ok:#10B981;--warn:#E8B84B;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:linear-gradient(160deg,var(--bg0) 0%,var(--bg1) 55%,var(--bg0) 100%);color:var(--text);min-height:100vh}
-main{max-width:1000px;margin:0 auto;padding:52px 20px 80px}
-.tag{display:inline-block;padding:7px 14px;border-radius:99px;background:var(--surface2);color:var(--accent2);font-weight:800;font-size:13px;letter-spacing:1.5px;border:1px solid var(--border)}
-h1{font-size:clamp(30px,5.5vw,48px);letter-spacing:-1.5px;margin:18px 0 10px;font-weight:900}
-.lead{color:var(--muted);font-size:15.5px;line-height:1.8;max-width:700px}
-.lead b{color:var(--accent2);font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px;margin-top:36px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;text-decoration:none;color:var(--text);display:block;transition:transform .15s,border-color .15s,box-shadow .15s}
-.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 32px rgba(0,0,0,.45)}
-.card .no{font-size:12px;font-weight:900;color:var(--accent);letter-spacing:1.5px}
-.card h2{margin:8px 0 8px;font-size:19px;color:var(--text)}
-.card p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.7}
-.st{display:inline-block;margin-top:13px;font-size:12px;font-weight:900;padding:3px 12px;border-radius:99px}
-.st.pub{background:rgba(52,201,142,.14);color:#34C98E}
-.st.coming{background:rgba(232,184,75,.12);color:#E8B84B}
-.st.test{background:rgba(90,200,250,.12);color:#5AC8FA}
-footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--divider);color:var(--muted);font-size:13px;line-height:1.9}
+body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(1000px 520px at 50% -10%,rgba(91,127,255,.08),transparent 70%);pointer-events:none}
+.nav{position:relative;z-index:1;border-bottom:1px solid var(--line-soft);backdrop-filter:blur(10px)}
+.nav-in{max-width:1020px;margin:0 auto;padding:0 22px;height:58px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;color:var(--text);text-decoration:none}
+.brand-mark{width:22px;height:22px;border-radius:6px;background:var(--grad);box-shadow:0 2px 10px rgba(91,127,255,.4)}
+.brand small{color:var(--muted);font-weight:500;font-size:11px}
+main{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:64px 22px 90px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--accent-2);text-transform:uppercase;margin-bottom:12px}
+h1{font-size:clamp(30px,5.5vw,46px);font-weight:700;letter-spacing:-.025em;margin:0 0 14px;line-height:1.2}
+.lead{color:var(--dim);font-size:15px;max-width:660px;margin:0 0 18px}
+.lead b{color:var(--text);background:linear-gradient(120deg,#8FA8FF,#38BDF8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.trust{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 10px}
+.trust span{font-size:12px;color:var(--dim);background:var(--surface);border:1px solid var(--line-soft);padding:5px 13px;border-radius:99px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:42px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;padding:22px 24px;text-decoration:none;color:var(--text);display:block;transition:transform .18s,border-color .18s,box-shadow .18s;overflow:hidden}
+.card:hover{transform:translateY(-3px);border-color:rgba(91,127,255,.45);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.card .no{font-size:10.5px;font-weight:800;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+.card h2{margin:9px 0 8px;font-size:17.5px;font-weight:650}
+.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.card .wm{position:absolute;right:-6px;bottom:-18px;font-size:88px;font-weight:800;color:rgba(148,163,198,.05);line-height:1;pointer-events:none;font-variant-numeric:tabular-nums}
+.st{display:inline-block;margin-top:14px;font-size:11px;font-weight:700;padding:3px 11px;border-radius:99px;letter-spacing:.02em}
+.st.pub{background:rgba(16,185,129,.13);color:#6EE7B7}
+.st.coming{background:rgba(232,184,75,.12);color:#F2CE7B}
+.st.test{background:rgba(56,189,248,.12);color:#7DD3FC}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line-soft);color:var(--muted);font-size:12.5px;line-height:1.9}
+@media(max-width:560px){main{padding:40px 16px 60px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<nav class="nav"><div class="nav-in">
+  <a class="brand" href="/"><span class="brand-mark"></span>野生工具铺<small>WILD TOOLS</small></a>
+</div></nav>
 <main>
-<span class="tag">TOOLS · 持续造</span>
-<h1>野生工具铺</h1>
-<p class="lead">一个大模型应用开发工程师，把日常里<b>"要是有个小工具就好了"</b>的麻烦和怪点子，真的做出来。<b>全部本地运行、数据不出浏览器</b>。下一个造什么？欢迎点单。</p>
+<div class="eyebrow">One Problem · One Tool · Every Week</div>
+<h1>日常有个麻烦？<br/>我试着把它做成工具。</h1>
+<p class="lead">一个大模型应用开发工程师主理的<b>日常小工具实验室</b>：把工作与生活里"要是有个小工具就好了"的麻烦，真的做出来——<b>全部本地运行，数据不出浏览器</b>。</p>
+<div class="trust"><span>🔒 数据本地运行</span><span>🔑 BYOK 自带模型</span><span>📦 每周至少一件新工具</span><span>💬 欢迎点单</span></div>
 <div class="grid">
-<a class="card" href="tools/001_周报急救箱/index.html"><span class="no">工具 #001</span><h2>周报急救箱</h2><p>周五想不起这周干了什么？把散碎记录拼成能直接交的周报。</p><span class="st pub">已发布</span></a>
-<a class="card" href="tools/005_C盘空间急救向导/index.html"><span class="no">工具 #002</span><h2>C盘空间急救向导</h2><p>C盘红了别乱删。勾选你装了什么，生成按"能省多少"排序的安全清理清单。</p><span class="st coming">首发在即</span></a>
-<a class="card" href="tools/006_岗位个人权重打分器/index.html"><span class="no">内测 v0.2</span><h2>岗位个人权重打分器</h2><p>配你自己的 AI 模型，粘贴 JD 自动解析打分；权重、岗位、Key 全在你浏览器里。</p><span class="st test">🔬 内测</span></a>
-<a class="card" href="tools/003_会议行动项整理器/index.html"><span class="no">工具 #003</span><h2>会议行动项整理器</h2><p>开完会只留下三件事：谁负责、截止日、下一步。</p><span class="st coming">待发</span></a>
-<a class="card" href="tools/001_朋友局破冰按钮/index.html"><span class="no">工具 #004</span><h2>朋友局破冰按钮</h2><p>冷场了按一下，一道不尴尬的破冰题。</p><span class="st coming">待发</span></a>
-<a class="card" href="tools/002_催进度措辞器/index.html"><span class="no">工具 #005</span><h2>催进度措辞器</h2><p>催活也能好好说话：把"快点交"翻译成得体的提醒。</p><span class="st coming">待发</span></a>
-<a class="card" href="tools/004_今晚吃什么决策器/index.html"><span class="no">工具 #006</span><h2>今晚吃什么决策器</h2><p>预算、距离、忌口筛完再决定，告别"随便"。</p><span class="st coming">待发</span></a>
+<a class="card" href="tools/001_周报急救箱/index.html"><span class="no">Tool 001</span><h2>周报急救箱</h2><p>周五想不起这周干了什么？把散碎记录拼成能直接交的周报。</p><span class="wm">01</span><span class="st pub">已发布</span></a>
+<a class="card" href="tools/005_C盘空间急救向导/index.html"><span class="no">Tool 002</span><h2>C盘空间急救向导</h2><p>C盘红了别乱删。勾选你装了什么，生成按"能省多少"排序的安全清理清单。</p><span class="wm">02</span><span class="st coming">首发在即</span></a>
+<a class="card" href="tools/006_岗位个人权重打分器/index.html"><span class="no">Beta · BYOK</span><h2>岗位个人权重打分器</h2><p>配你自己的 AI 模型，粘贴 JD 自动解析打分；权重、岗位、Key 全在你浏览器里。</p><span class="wm">β</span><span class="st test">内测中</span></a>
+<a class="card" href="tools/003_会议行动项整理器/index.html"><span class="no">Tool 003</span><h2>会议行动项整理器</h2><p>开完会只留下三件事：谁负责、截止日、下一步。</p><span class="wm">03</span><span class="st coming">待发</span></a>
+<a class="card" href="tools/001_朋友局破冰按钮/index.html"><span class="no">Tool 004</span><h2>朋友局破冰按钮</h2><p>冷场了按一下，一道不尴尬的破冰题。</p><span class="wm">04</span><span class="st coming">待发</span></a>
+<a class="card" href="tools/002_催进度措辞器/index.html"><span class="no">Tool 005</span><h2>催进度措辞器</h2><p>催活也能好好说话：把"快点交"翻译成得体的提醒。</p><span class="wm">05</span><span class="st coming">待发</span></a>
+<a class="card" href="tools/004_今晚吃什么决策器/index.html"><span class="no">Tool 006</span><h2>今晚吃什么决策器</h2><p>预算、距离、忌口筛完再决定，告别"随便"。</p><span class="wm">06</span><span class="st coming">待发</span></a>
 </div>
 <footer>
-野生工具铺 ｜ 大模型应用工程师主理 ｜ 每周至少一件新工具<br/>
+野生工具铺 · WILD TOOLS ｜ 大模型应用工程师主理<br/>
 所有工具均为网页版本地运行：数据不出你的浏览器，不上传任何服务器；用 AI 辅助开发，诚实标注边界。
 </footer>
 </main>

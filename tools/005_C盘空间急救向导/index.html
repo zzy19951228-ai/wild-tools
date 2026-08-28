@@ -1,11 +1,11 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C盘空间急救向导｜工具 #002</title>
 <style>
-  :root { --ink:#C7D3E8; --orange:#4D6BFE; --cream:#FFF6EC; --muted:#8A94A8; --ok:#34C98E; --warn:#E8B84B; }
+  :root { --ink:#C7D3E8; --orange:#4D6BFE; --cream:#1A2740; --muted:#8A94A8; --ok:#34C98E; --warn:#E8B84B; }
   * { box-sizing:border-box; }
   body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; background:linear-gradient(160deg,#0B1220 0%,#101B30 55%,#0B1220 100%); color:var(--ink); }
   main { max-width:980px; margin:0 auto; padding:34px 20px 60px; }
@@ -86,11 +86,11 @@ const ITEMS = [
   {g:"办公", id:"downloads", nm:"下载文件夹（自己动手）", est:"1–20 GB", lo:5, rk:"low", how:"列出最大的 20 个文件，自己挑着删（这条命令永远只看不删）：", cmd:"Get-ChildItem ~\Downloads -Recurse -File | Sort-Object Length -Descending | Select-Object -First 20 @{n='GB';e={[math]::Round($_.Length/1GB,2)}}, FullName"},
   // 大文件
   {g:"大文件", id:"steam", nm:"Steam 游戏", est:"10–100 GB", lo:25, rk:"low", how:"别卸载！Steam → 设置 → 存储 → 添加 D 盘库 → 右键游戏→属性→移动。"},
-  {g:"大文件", id:"browser", nm:"浏览器缓存", est:"0.5–3 GB", lo:1.5, rk:"low", how:"浏览器内操作：设置→隐私→清除浏览数据→只勾"缓存"。"},
+  {g:"大文件", id:"browser", nm:"浏览器缓存", est:"0.5–3 GB", lo:1.5, rk:"low", how:"浏览器内操作：设置→隐私→清除浏览数据→只勾「缓存」。"},
   // 系统
   {g:"系统", id:"wupdate", nm:"Windows 更新残留", est:"2–15 GB", lo:6, rk:"low", how:"系统自带，最稳：设置 → 系统 → 存储 → 清理建议。命令行版：", cmd:"Dism.exe /Online /Cleanup-Image /StartComponentCleanup"},
-  {g:"系统", id:"temp", nm:"临时文件夹 %TEMP%", est:"1–10 GB", lo:4, rk:"low", how:"先看占了多少（只读）：", cmd:"Get-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum | %{ "TEMP 占用 {0:N1} GB" -f ($_.Sum/1GB) }\n:: 清理 7 天前的临时文件，先加 -WhatIf 预览\nGet-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-7)} | Remove-Item -Recurse -WhatIf"},
-  {g:"系统", id:"hib", nm:"休眠文件 hiberfil.sys", est:"内存的 40–75%", lo:12, rk:"mid", how:"<b>风险中：关闭后"休眠"功能不可用（睡眠不受影响）</b>。不用休眠才关：", cmd:"powercfg /h off"},
+  {g:"系统", id:"temp", nm:"临时文件夹 %TEMP%", est:"1–10 GB", lo:4, rk:"low", how:"先看占了多少（只读）：", cmd:"Get-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum | %{ 'TEMP 占用 {0:N1} GB' -f ($_.Sum/1GB) }\n:: 清理 7 天前的临时文件，先加 -WhatIf 预览\nGet-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-7)} | Remove-Item -Recurse -WhatIf"},
+  {g:"系统", id:"hib", nm:"休眠文件 hiberfil.sys", est:"内存的 40–75%", lo:12, rk:"mid", how:"<b>风险中：关闭后「休眠」功能不可用（睡眠不受影响）</b>。不用休眠才关：", cmd:"powercfg /h off"},
 ];
 const G = {"开发者":[], "办公":[], "大文件":[], "系统":[]};
 ITEMS.forEach(x => G[x.g].push(x));
