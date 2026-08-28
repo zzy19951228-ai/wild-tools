@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>岗位个人权重打分器｜野生工具铺</title>
+<title>岗位参谋｜野生工具铺</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235B7FFF'/%3E%3Cstop offset='1' stop-color='%237B5FFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3C/svg%3E"/>
 <style>
 :root{
@@ -139,7 +139,7 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
 <main>
 <header class="hero">
   <div class="eyebrow">Decision Tool · 求职决策</div>
-  <h1>岗位个人权重打分器</h1>
+  <h1>岗位参谋</h1>
   <p class="lead">没有"最好的岗位"，只有<b>对你的权衡最划算的岗位</b>。配置一次你自己的 AI 模型，之后只需粘贴 JD——自动解析薪资、城市、硬性要求与红旗话术，按你的权重打好建议分，你确认或微调。</p>
   <div class="trust"><span>🔒 数据仅存本地浏览器</span><span>🔑 API Key 不上传</span><span>🧩 支持官方 / 中转站任意模型</span></div>
   <div class="privacy">AI 解析时，JD 文本与你的 Key 经本站无状态代理转发到<b>你自己配置的模型服务商</b>，代理不记录、不存储；权重、岗位、Key 全部只存在你的浏览器 localStorage。</div>
@@ -197,7 +197,7 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
 <button class="big ghost" id="delAll" style="margin-top:18px">清空全部本地数据</button>
 
 <footer>
-岗位个人权重打分器 · 野生工具铺 ｜ 大模型应用工程师主理<br/>
+岗位参谋 · 野生工具铺 ｜ 大模型应用工程师主理<br/>
 用 AI 辅助开发；AI 解析由你自己配置的模型完成；不联网上传任何个人数据。
 </footer>
 </main>
@@ -276,8 +276,8 @@ $("parseBtn").onclick=async function(){
  var usr="【用户偏好】城市："+(S.cfg.city||"未知")+"；方向："+(S.cfg.dir||"未知")+"。用户权重（0-5）：薪资"+S.w.pay+"、地点"+S.w.loc+"、方向"+S.w.dir+"、稳定"+S.w.stb+"、成长"+S.w.gro+"。【JD原文】"+jd+"。输出JSON字段：title字符串岗位名；company字符串公司名或空串；city字符串工作城市；salary_min数字或null单位k每月；salary_max同前；hard_skills字符串数组硬性技能；red_flags字符串数组红旗信号如加班暗示年龄门槛无则空数组；summary一句话岗位画像；suggested对象含pay、loc、dir、stb、gro五个1到5整数，打分基准：3分等于该城市该岗位市场普遍水平，薪资明显高于市场则pay给4或5，loc按与用户城市距离同城5邻城4同省3异地2很远1，dir按与用户方向吻合度，stb看公司阶段与行业，gro看技能栈与前景；reason一句话打分理由。";
  try{
   var c=await llm([{role:"system",content:sys},{role:"user",content:usr}],0.2);
-  var m=String(c).match(/\{[\s\S]*?\}/);if(!m)throw new Error("模型没返回 JSON："+String(c).slice(0,120));
-  var d=JSON.parse(m[0]);
+  var t=String(c).replace(/```(json)?/gi,"");var a=t.indexOf("{"),b=t.lastIndexOf("}");if(a<0||b<=a)throw new Error("模型没返回 JSON："+String(c).slice(0,120));
+  var d=JSON.parse(t.slice(a,b+1));
   renderPreview(d);
   st("parseStatus","ok","✓ 解析成功——确认或微调分数，然后入列")
  }catch(e){st("parseStatus","err","解析失败："+e.message)}
@@ -328,7 +328,7 @@ function renderRes(){
  var contrib=DIMS.map(function(d){return {n:d[1],v:S.w[d[0]]*win.s[d[0]],k:d[0]}}).sort(function(a,b){return b.v-a.v}).slice(0,2).map(function(x){return x.n+"（权重"+S.w[x.k]+"×打分"+win.s[x.k]+"）"}).join("、");
  r.innerHTML='<div class="rank"><div class="rank-head"><div style="font-size:13px;opacity:.75;margin-bottom:4px">按你的权重算出来的排名　<button id="copyRes" style="float:right;font-size:12px;background:#1A2740;color:#5AC8FA;border:1px solid #31435F;border-radius:8px;padding:4px 12px;cursor:pointer">📋 复制结果</button></div><div class="win">🥇 '+esc(win.n)+(win.c?" · "+esc(win.c):"")+'</div><div style="font-size:12px;opacity:.8;margin-top:5px">它赢在：'+contrib+"</div></div>"+sorted.map(function(x,i){return '<div class="rrow"><div class="rt"><span>'+(i+1)+". "+esc(x.j.n)+"</span><span>"+x.t.toFixed(1)+'</span></div><div class="bar"><i style="width:'+(x.t/max*100)+'%"></i></div></div>'}).join("")+"</div>";
  $("copyRes").onclick=function(){
-  var txt="【岗位打分结果｜权重：薪资"+S.w.pay+"/地点"+S.w.loc+"/方向"+S.w.dir+"/稳定"+S.w.stb+"/成长"+S.w.gro+"】\n"+sorted.map(function(x,i){return (i+1)+". "+x.j.n+(x.j.c?"（"+x.j.c+"）":"")+" — "+x.t.toFixed(1)+"分"}).join("\n")+"\n（来自 野生工具铺·岗位个人权重打分器）";
+  var txt="【岗位打分结果｜权重：薪资"+S.w.pay+"/地点"+S.w.loc+"/方向"+S.w.dir+"/稳定"+S.w.stb+"/成长"+S.w.gro+"】\n"+sorted.map(function(x,i){return (i+1)+". "+x.j.n+(x.j.c?"（"+x.j.c+"）":"")+" — "+x.t.toFixed(1)+"分"}).join("\n")+"\n（来自 野生工具铺·岗位参谋）";
   navigator.clipboard.writeText(txt).then(function(){$("copyRes").textContent="✓ 已复制";setTimeout(function(){$("copyRes").textContent="📋 复制结果"},1500)})
  }
 }
@@ -357,7 +357,7 @@ $("askBtn").onclick=async function(){
  st("askStatus","","估算中…");
  try{
   var c=await llm([{role:"system",content:"你是薪资行情估算助手。只输出一个JSON对象，不要其他文字。"},{role:"user",content:"估算 "+city+" · "+dir+" 岗位的月薪区间，单位 k/月，人民币税前。JSON 字段：min 数字区间下限，max 数字区间上限，note 一句话写依据与不确定性。"}],0.2);
-  var m=String(c).match(/\{[\s\S]*?\}/);var r=JSON.parse(m[0]);
+  var t2=String(c).replace(/```(json)?/gi,"");var a2=t2.indexOf("{"),b2=t2.lastIndexOf("}");var r=JSON.parse(t2.slice(a2,b2+1));
   if(num(r.min)===null||num(r.max)===null)throw new Error("模型返回的数字无效");
   var refs=load("jobScorerRef",{});refs[normCity(city)]={min:num(r.min),max:num(r.max),note:String(r.note||"")};localStorage.setItem("jobScorerRef",JSON.stringify(refs));
   st("askStatus","ok","✓ 已画到上面总览里（绿色虚线）");renderOv()
