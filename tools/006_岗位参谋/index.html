@@ -126,6 +126,13 @@ label.lb{font-weight:600;font-size:12.5px;display:block;margin-top:13px;color:va
 .guide{background:rgba(10,15,28,.5);border:1px dashed var(--line);border-radius:var(--r-md);padding:12px 15px;font-size:12px;line-height:1.8;margin-top:14px;color:var(--dim)}
 .guide b{color:var(--text)}
 .tag{display:none}
+.manual-fold{border:1px solid var(--line-soft);border-radius:12px;background:var(--surface);padding:4px 18px;margin-top:4px}
+.manual-fold summary{cursor:pointer;padding:12px 0;font-weight:650;font-size:15px;color:var(--dim);list-style:none;display:flex;align-items:baseline;gap:10px;transition:color .15s}
+.manual-fold summary:hover{color:var(--text)}
+.manual-fold summary::-webkit-details-marker{display:none}
+.manual-fold summary span{font-weight:400;font-size:12px;color:var(--muted)}
+.manual-fold[open] summary{border-bottom:1px solid var(--line-soft);margin-bottom:12px}
+.manual-fold .card{margin:12px 0 16px}
 footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);color:var(--muted);font-size:12px;line-height:1.9}
 @media(max-width:560px){.wrow{flex-wrap:wrap}.wrow .nm{width:100%}.srow .snm{width:100%}main{padding:30px 16px 56px}.nav-in{padding:0 16px}}
 </style>
@@ -163,8 +170,9 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
 <p class="hint">💡 把候选岗位都粘一遍——每个岗位都会进入"薪资总览"，你自己的市场行情越用越准。</p>
 
 <div class="sec-label">MANUAL</div>
-<h2 class="sec">手动添加</h2>
-<p class="sec-sub">不想配模型也能用：手动打分 + 选填薪资城市（同样进入总览）。</p>
+<details class="manual-fold">
+<summary>手动添加<span>没配模型，或只想快速记一笔？点开手动录入 ▸</span></summary>
+<p class="sec-sub">填岗位名 → 给五个维度各点一个 1–5 分（不确定就点 3）→ 加入列表，与 AI 解析的岗位一起排名。城市和薪资选填，填了会进"薪资总览"。</p>
 <div class="card">
   <input type="text" id="jName" placeholder="岗位名，如：AI 应用工程师"/>
   <input type="text" id="jComp" placeholder="公司/来源（可选）"/>
@@ -176,6 +184,7 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
   <div id="scoreRows"></div>
   <button class="big ghost" id="addBtn">＋ 加入对比列表</button>
 </div>
+</details>
 <div id="jobs"></div>
 
 <div class="sec-label">MARKET</div>
