@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>催进度措辞器｜工具 #002</title>
+  <style>
+    :root{--ink:#17172A;--orange:#FF5A36;--cream:#FFF6EC;--yellow:#FFC53D;--muted:#696775;--line:#d9d2cf}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:linear-gradient(135deg,#fff6ec,#fff 58%,#ffe9de)}main{max-width:1080px;margin:auto;padding:31px 20px 52px}header{display:flex;justify-content:space-between;gap:18px;align-items:start;margin-bottom:25px}.tag{display:inline-block;background:var(--orange);border-radius:999px;padding:7px 12px;color:#fff;font-size:13px;font-weight:800}h1{font-size:clamp(30px,6vw,51px);letter-spacing:-2px;margin:9px 0}.lead{margin:0;color:var(--muted);line-height:1.7}.privacy{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px;max-width:256px;font-size:13px;line-height:1.55}.privacy b{color:var(--orange)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:19px}.card{background:rgba(255,255,255,.88);border:2px solid var(--ink);border-radius:20px;padding:22px;box-shadow:7px 7px 0 var(--ink)}h2{margin:0 0 6px;font-size:21px}.hint{margin:0 0 15px;color:var(--muted);font-size:13px;line-height:1.6}label{display:block;margin:14px 0 7px;font-size:15px;font-weight:800}input,textarea,select{width:100%;padding:11px 12px;font:inherit;border:1.5px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}textarea{resize:vertical;min-height:78px;line-height:1.55}input:focus,textarea:focus,select:focus{outline:3px solid #ffd7cd;border-color:var(--orange)}.buttonrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}button{border:2px solid var(--ink);border-radius:12px;padding:11px 15px;background:var(--yellow);box-shadow:3px 3px 0 var(--ink);font:inherit;font-weight:800;cursor:pointer}button.secondary{background:#fff}button:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}.outputs{display:grid;gap:12px}.message{border:1.5px solid var(--line);border-radius:14px;padding:13px;background:#fff}.message b{font-size:14px}.message p{white-space:pre-wrap;line-height:1.65;margin:7px 0 0;color:#363541}.message button{font-size:12px;padding:7px 9px;margin-top:10px;box-shadow:2px 2px 0 var(--ink)}footer{margin-top:25px;color:var(--muted);font-size:13px;line-height:1.7}@media(max-width:760px){main{padding:20px 15px 42px}header{display:block}.privacy{margin-top:14px}.grid{grid-template-columns:1fr}.card{padding:17px;box-shadow:5px 5px 0 var(--ink)}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><span class="tag">野生工具匠 · 工具 #002</span><h1>催进度措辞器</h1><p class="lead">事情要推进，语气也可以留余地。先把关键信息说清，再选适合的表达方式。</p></div><div class="privacy"><b>纯本地运行</b><br>不联网、不上传内容；关掉页面后不会保存。</div></header>
+  <section class="grid"><div class="card"><h2>填 4 个事实</h2><p class="hint">工具输出的是措辞草稿。发送前请确认对方、事实、时间和语气都合适。</p>
+    <label for="name">对方怎么称呼？</label><input id="name" placeholder="例如：小李 / 王老师" />
+    <label for="thing">需要推进什么？</label><textarea id="thing" placeholder="例如：活动落地页的最终文案"></textarea>
+    <label for="deadline">希望何时收到？</label><input id="deadline" placeholder="例如：今天 17:00 前 / 周三上午" />
+    <label for="context">补充背景（可空）</label><textarea id="context" placeholder="例如：设计同学需要据此出第一版海报"></textarea>
+    <label for="relation">沟通场景</label><select id="relation"><option value="peer">同事 / 跨部门协作</option><option value="partner">合作方 / 外部伙伴</option><option value="leader">向上同步</option></select>
+    <div class="buttonrow"><button id="generate">给我 3 种说法</button><button class="secondary" id="fill">填入示例</button><button class="secondary" id="clear">清空</button></div>
+  </div><div class="card"><h2>可选措辞</h2><p class="hint">推荐先用“温和确认”；事情确实紧急时再用“明确时限”。</p><div class="outputs" id="outputs"><p class="hint">填好左侧内容后，点击“给我 3 种说法”。</p></div></div></section>
+  <footer>工具 #002 的边界：沟通的关键是清楚、尊重和及时同步；没有任何话术能替代事实确认或合理排期。</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id); const safe=v=>v.trim()||'这项内容';
+function messages(){const n=safe($('name').value),t=safe($('thing').value),d=safe($('deadline').value),c=$('context').value.trim(),r=$('relation').value;const tail=c?`，因为${c}`:'';let prefix='';if(r==='partner')prefix='想和您确认一下';if(r==='leader')prefix='向您同步一下';const data=[['温和确认',`${n}，${prefix||'想确认一下'}${t}现在方便推进吗？如果可以的话，希望能在${d}前收到${tail}。有需要我补充的地方也请告诉我。`],['明确时限',`${n}，关于${t}，为了后续安排能正常推进，麻烦帮忙在${d}前给到${tail}。如果时间上有困难，辛苦提前和我说一下，我们一起调整。`],['给选择，不催死',`${n}，想和你对一下${t}的节奏：如果${d}前能给到，我这边就按原计划继续；如果还需要时间，也麻烦告诉我一个更合适的时间点${tail}。谢谢！`]];const out=$('outputs');out.innerHTML='';data.forEach(([title,text])=>{const div=document.createElement('div');div.className='message';div.innerHTML=`<b>${title}</b><p>${text}</p><button>复制这句</button>`;div.querySelector('button').onclick=async()=>{try{await navigator.clipboard.writeText(text);div.querySelector('button').textContent='已复制'}catch{window.prompt('复制以下内容：',text)}};out.append(div)})}
+$('generate').onclick=messages;$('fill').onclick=()=>{$('name').value='小李';$('thing').value='活动落地页的最终文案';$('deadline').value='今天 17:00 前';$('context').value='设计同学需要据此出第一版海报';$('relation').value='peer';messages()};$('clear').onclick=()=>{['name','thing','deadline','context'].forEach(id=>$(id).value='');$('relation').value='peer';$('outputs').innerHTML='<p class="hint">填好左侧内容后，点击“给我 3 种说法”。</p>'}
+</script>
+</body></html>

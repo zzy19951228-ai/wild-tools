@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>朋友局破冰按钮｜野生 AI 工具匠 #001</title>
+  <style>
+    :root{--ink:#17172a;--orange:#ff5a36;--cream:#fff6ec;--yellow:#ffc53d;--pink:#ffc9bd;--muted:#676573;--line:#d8d1d0}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% 5%,#ffd875 0 9%,transparent 27%),linear-gradient(140deg,#fff6ec 0%,#fff 58%,#ffd9cf 120%);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+    main{width:min(1070px,calc(100% - 32px));margin:auto;padding:31px 0 50px}header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:25px}.tag{display:inline-flex;align-items:center;gap:6px;background:var(--orange);color:#fff;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:800}.tag i{display:inline-block;width:7px;height:7px;background:var(--yellow);border-radius:50%}h1{font-size:clamp(32px,6vw,54px);letter-spacing:-2px;margin:10px 0 8px}.lead{margin:0;color:var(--muted);line-height:1.7;font-size:16px}.privacy{max-width:270px;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px 14px;line-height:1.55;font-size:13px;box-shadow:4px 4px 0 var(--ink)}.privacy b{color:var(--orange)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:21px;padding:22px;box-shadow:7px 7px 0 var(--ink)}h2{font-size:21px;margin:0 0 7px}.hint{margin:0 0 15px;color:var(--muted);line-height:1.6;font-size:13px}.field{margin:15px 0}.field label{display:block;margin-bottom:8px;font-weight:800;font-size:15px}.choices{display:flex;gap:8px;flex-wrap:wrap}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:block;border:1.5px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;font-size:14px;cursor:pointer}.choice input:checked+span{border-color:var(--ink);background:var(--yellow);box-shadow:2px 2px 0 var(--ink);font-weight:800}.choice input:focus+span{outline:3px solid #ffd8cd}.buttonrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}button{border:2px solid var(--ink);border-radius:12px;padding:12px 16px;background:var(--yellow);font:inherit;font-weight:800;box-shadow:3px 3px 0 var(--ink);cursor:pointer}button.secondary{background:#fff}button:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}.result{min-height:450px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;border-radius:18px;padding:25px;background:var(--ink);color:#fff;overflow:hidden}.result .small{color:var(--yellow);font-size:13px;font-weight:800;letter-spacing:.5px}.result h3{font-size:clamp(29px,5vw,44px);letter-spacing:-1px;line-height:1.25;margin:12px 0}.result p{max-width:420px;color:#e5e1e9;line-height:1.72;margin:0}.result .rule{margin-top:17px;padding:9px 12px;border:1px solid #5d5c6c;border-radius:11px;color:#ffc9bd;font-size:13px;line-height:1.55}.result .swap{margin-top:19px;background:var(--orange);color:#fff}.emptyicon{font-size:52px;line-height:1;margin-bottom:13px}.notice{margin-top:18px;padding:13px 14px;border:1.5px dashed var(--line);border-radius:13px;color:var(--muted);line-height:1.65;font-size:13px;background:#fffdf9}footer{margin-top:24px;color:var(--muted);font-size:13px;line-height:1.7}@media(max-width:760px){main{width:min(100% - 28px,1070px);padding-top:21px}header{display:block}.privacy{margin-top:14px}.grid{grid-template-columns:1fr}.card{padding:17px;box-shadow:5px 5px 0 var(--ink)}.result{min-height:330px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><span class="tag"><i></i> 野生 AI 工具匠 · 工具 #001</span><h1>朋友局破冰按钮</h1><p class="lead">朋友局冷场时，不用硬聊、不玩尴尬惩罚题。按人数和熟悉程度，来一题刚刚好的。</p></div>
+    <div class="privacy"><b>纯本地运行</b><br>不联网、不上传聊天、定位或联系人；刷新页面后不会保存。</div>
+  </header>
+  <section class="grid">
+    <div class="card"><h2>先选你们现在的状态</h2><p class="hint">只需 3 个条件。题目默认友好；任何人不想回答都可以直接跳过。</p>
+      <div class="field"><label>现在有多少人？</label><div class="choices" data-name="people"><label class="choice"><input type="radio" name="people" value="2" checked><span>2 人</span></label><label class="choice"><input type="radio" name="people" value="3-5"><span>3–5 人</span></label><label class="choice"><input type="radio" name="people" value="6+"><span>6 人以上</span></label></div></div>
+      <div class="field"><label>彼此熟悉吗？</label><div class="choices"><label class="choice"><input type="radio" name="familiar" value="new"><span>刚认识 / 半熟</span></label><label class="choice"><input type="radio" name="familiar" value="friends" checked><span>熟朋友</span></label><label class="choice"><input type="radio" name="familiar" value="old"><span>老朋友</span></label></div></div>
+      <div class="field"><label>想要什么氛围？</label><div class="choices"><label class="choice"><input type="radio" name="mood" value="gentle" checked><span>轻松不尴尬</span></label><label class="choice"><input type="radio" name="mood" value="fun"><span>有点好笑</span></label><label class="choice"><input type="radio" name="mood" value="warm"><span>慢慢聊深一点</span></label></div></div>
+      <div class="buttonrow"><button id="generate">给我们一题</button><button class="secondary" id="demo">来个录屏示例</button></div>
+      <div class="notice">这不是“真心话大冒险”。没有羞辱、隐私逼问、成人内容和惩罚；觉得不舒服，就点“换一题”或直接跳过。</div>
+    </div>
+    <div class="card"><h2>这一轮，试试这个</h2><p class="hint">把手机放桌上，谁先笑谁先说。回答没有标准答案。</p><div class="result" id="result"><div class="emptyicon">🪩</div><div class="small">先选左侧状态</div><h3>按一下，救一下冷场。</h3><p>一题就够。让大家自然开口，比逼着热闹更重要。</p></div></div>
+  </section>
+  <footer>工具 #001 的边界：它只提供友好的交流灵感，不替代真实沟通。任何人可以拒绝、跳过或换题。</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);let current=[];let previous='';
+const bank={
+  new:{gentle:[['找共同点','轮流说一个“我以为只有我会这样”的小习惯，其他人如果也有，就举一下手。','不问隐私，只聊日常小事。'],['今天的微小开心','每个人说一件今天让自己有一点点开心的小事。','可以是“路上没堵车”这种级别。'],['第一次印象','用三个不带评价的词，说说你今天的状态。','只描述自己，不评价别人。']],fun:[['离谱但无害','如果明天醒来多了一项完全没用的超能力，你希望是什么？','越没用越好，不用解释。'],['给今天命名','如果今天是一部电影，请给它起一个很夸张的名字。','先说标题，再说一句简介。'],['奇怪排行榜','把“奶茶、火锅、早起”按今天的心情排个名，并说最短理由。','没有正确顺序。']],warm:[['最近学会的事','最近有什么小事，你突然变得比以前会做了？','一件小事就够。'],['想留住的一天','如果这周只能留住一个瞬间，你会选哪个？','不需要照片，也不用讲太多细节。'],['小小推荐','给在场的人推荐一个最近让你舒服的东西：歌、店、路线都行。','只推荐，不安利。']]},
+  friends:{gentle:[['默契校准','每个人写下“这群人最常说的一句话”，一起亮出来。','答案不一样也很好笑。'],['轻量回忆','轮流说一件“想起来会笑，但不用展开讲”的小事。','不追问细节。'],['今天谁最像','用一个天气形容自己今天，再猜猜朋友会选什么天气。','猜错就听对方解释。']],fun:[['无用颁奖','给在场每个人颁一个“无用但精准”的奖，奖名必须是褒义。','例如：最会把外卖点得恰到好处奖。'],['如果我们开店','如果这群人一起开一家店，它会卖什么最离谱的东西？','每个人补一个细节。'],['表情包外交','每个人选一个最能代表自己今天的表情包描述，但不能真的发图。','只能用语言让大家猜。']],warm:[['偷偷感谢','说一件你曾经觉得“还好有你”的小事，不必煽情。','不想说可以跳过。'],['近况更新','最近有什么变化，你还没来得及告诉大家？','可以小到换了一条上班路线。'],['未来彩蛋','给三个月后的自己留一句提醒，让朋友帮你记住。','一句即可。']]},
+  old:{gentle:[['老梗复活','说一个只有这群人听得懂、但现在想起还会笑的词。','新朋友听不懂也没关系。'],['反向夸夸','每个人说一个自己最近做得不错的小事，其他人补一句具体的夸奖。','不许敷衍“你很棒”。'],['时间胶囊','如果把今天装进一个小盒子，只能放一件东西，你放什么？','可以是声音、味道或一句话。']],fun:[['记忆修正案','讲一个大家共同经历过的事，然后让其他人投票“你记错了没”。','只聊安全、轻松的回忆。'],['如果交换人生','和在场任意一人交换一天，你最想先体验他的哪一小时？','不能说“全部”。'],['老友新设定','给在场每个人加一个游戏角色职业，为什么？','职业必须听起来很厉害。']],warm:[['这些年变了','说一件你觉得自己变了、但朋友可能还没发现的事。','不必讲原因。'],['想重来的一天','有哪次普通相聚，你愿意再过一遍？','只说画面，不评判当时的人。'],['以后还要','给这群人提议一个“以后一定要一起做”的小计划。','小到下次一起散步也可以。']]}
+};
+function value(name){return document.querySelector(`input[name="${name}"]:checked`).value}
+function pool(){return bank[value('familiar')][value('mood')]}
+function generate(){current=pool();let item=current[Math.floor(Math.random()*current.length)];if(current.length>1&&item[0]===previous)item=current[(current.indexOf(item)+1)%current.length];previous=item[0];$('result').innerHTML=`<div class="small">${value('people')} · ${value('familiar')==='new'?'刚认识 / 半熟':value('familiar')==='friends'?'熟朋友':'老朋友'} · ${value('mood')==='gentle'?'轻松不尴尬':value('mood')==='fun'?'有点好笑':'慢慢聊深一点'}</div><h3>${item[0]}</h3><p>${item[1]}</p><div class="rule">${item[2]}</div><button class="swap" id="swap">不太对？换一题</button>`;$('swap').onclick=generate}
+$('generate').onclick=generate;$('demo').onclick=()=>{document.querySelector('input[name="people"][value="3-5"]').checked=true;document.querySelector('input[name="familiar"][value="friends"]').checked=true;document.querySelector('input[name="mood"][value="fun"]').checked=true;generate()};
+</script>
+</body></html>

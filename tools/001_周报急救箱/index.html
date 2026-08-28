@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>周报急救箱｜工具 #001</title>
+  <style>
+    :root { --ink:#17172A; --orange:#FF5A36; --cream:#FFF6EC; --yellow:#FFC53D; --muted:#6d6c78; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8dd 100%); color:var(--ink); font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+    main { max-width:1040px; margin:0 auto; padding:32px 20px 54px; }
+    header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:24px; }
+    .tag { display:inline-block; padding:7px 12px; border-radius:99px; background:var(--orange); color:#fff; font-size:13px; font-weight:800; }
+    h1 { font-size:clamp(30px,6vw,52px); letter-spacing:-2px; margin:10px 0 8px; }
+    .lead { margin:0; color:var(--muted); font-size:16px; line-height:1.7; }
+    .privacy { max-width:250px; padding:12px 14px; border:2px solid var(--ink); border-radius:14px; font-size:13px; line-height:1.55; background:#fff; }
+    .privacy b { color:var(--orange); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .card { background:rgba(255,255,255,.84); border:2px solid var(--ink); border-radius:20px; padding:22px; box-shadow:7px 7px 0 var(--ink); }
+    .card h2 { margin:0 0 7px; font-size:21px; }
+    .hint { margin:0 0 15px; color:var(--muted); font-size:13px; line-height:1.6; }
+    label { display:block; margin:16px 0 7px; font-weight:800; font-size:15px; }
+    textarea, select { width:100%; border:1.5px solid #cfcbd0; border-radius:11px; padding:12px; color:var(--ink); font:inherit; background:#fff; }
+    textarea { min-height:92px; resize:vertical; line-height:1.6; }
+    textarea:focus,select:focus { outline:3px solid #ffd3c7; border-color:var(--orange); }
+    .buttonrow { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+    button { border:2px solid var(--ink); border-radius:12px; padding:12px 17px; background:var(--yellow); color:var(--ink); font:inherit; font-weight:800; cursor:pointer; box-shadow:3px 3px 0 var(--ink); }
+    button:hover { transform:translate(1px,1px); box-shadow:2px 2px 0 var(--ink); }
+    button.secondary { background:#fff; }
+    #output { min-height:480px; white-space:pre-wrap; font-family:"Microsoft YaHei","PingFang SC",sans-serif; font-size:15px; }
+    .empty { color:var(--muted); }
+    footer { margin-top:27px; color:var(--muted); font-size:13px; line-height:1.7; }
+    @media(max-width:760px) { main{padding:20px 15px 40px} header{display:block}.privacy{margin-top:14px}.grid{grid-template-columns:1fr}.card{box-shadow:5px 5px 0 var(--ink);padding:17px} }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <span class="tag">野生工具匠 · 工具 #001</span>
+        <h1>周报急救箱</h1>
+        <p class="lead">把一周散落的工作，拼成一份能继续修改、也能直接提交的周报初稿。</p>
+      </div>
+      <div class="privacy"><b>纯本地运行</b><br>不联网、不上传内容；刷新或关闭页面后不会保存。</div>
+    </header>
+    <section class="grid">
+      <div class="card">
+        <h2>先丢碎片，再整理</h2>
+        <p class="hint">不用写完整句。每行一件事；工具只会重组你填的内容，不会编造不存在的成果。</p>
+        <label for="role">你的角色 / 本周主题</label>
+        <input id="role" aria-label="你的角色或本周主题" placeholder="例如：运营 / 8 月活动筹备" style="width:100%;border:1.5px solid #cfcbd0;border-radius:11px;padding:12px;font:inherit" />
+        <label for="done">这周推进了什么？</label>
+        <textarea id="done" placeholder="例如：完成活动主视觉初稿&#10;和设计确认了 3 个修改点&#10;整理了 12 位达人名单"></textarea>
+        <label for="result">有什么结果 / 数据？（可空）</label>
+        <textarea id="result" placeholder="例如：初稿已通过一轮评审&#10;达人名单覆盖率 80%"></textarea>
+        <label for="blocker">卡点 / 需要协同什么？（可空）</label>
+        <textarea id="blocker" placeholder="例如：还缺产品最终卖点，需要产品同学周二前确认"></textarea>
+        <label for="next">下周准备做什么？</label>
+        <textarea id="next" placeholder="例如：根据反馈改第二版主视觉&#10;完成达人分层并发出首批邀约"></textarea>
+        <label for="tone">表达方式</label>
+        <select id="tone"><option value="steady">稳妥清晰（默认）</option><option value="brief">极简汇报</option><option value="collab">强调协同</option></select>
+        <div class="buttonrow"><button id="generate">生成周报初稿</button><button class="secondary" id="fill">填入示例</button><button class="secondary" id="clear">清空</button></div>
+      </div>
+      <div class="card">
+        <h2>你的周报初稿</h2>
+        <p class="hint">生成后请核对事实、数据和人名，再复制到公司的周报模板。</p>
+        <textarea id="output" class="empty" readonly>填左侧内容后，点击“生成周报初稿”。</textarea>
+        <div class="buttonrow"><button class="secondary" id="copy">复制内容</button></div>
+      </div>
+    </section>
+    <footer>工具 #001 的边界：它负责帮你整理表达，不负责替你判断优先级，更不能代替对真实工作结果的核对。</footer>
+  </main>
+  <script>
+    const $ = id => document.getElementById(id);
+    const lines = value => value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+    const bullets = arr => arr.length ? arr.map(x => `- ${x}`).join('\n') : '- （本项暂未填写）';
+    function generate() {
+      const role = $('role').value.trim(); const done = lines($('done').value); const result = lines($('result').value);
+      const blocker = lines($('blocker').value); const next = lines($('next').value); const tone = $('tone').value;
+      const title = role ? `【${role}】本周工作周报` : '本周工作周报';
+      let intro = '本周围绕既定事项推进，以下为进展、待协同项与下周安排。';
+      if (tone === 'brief') intro = '本周进展如下。';
+      if (tone === 'collab') intro = '本周已完成相关推进；需协同事项已单列，便于尽快闭环。';
+      const text = `${title}\n\n${intro}\n\n一、本周推进\n${bullets(done)}\n\n二、阶段结果 / 数据\n${bullets(result)}\n\n三、待解决事项与协同\n${bullets(blocker)}\n\n四、下周计划\n${bullets(next)}\n\n备注：以上内容根据本周输入整理，请在提交前核对事实、数据与截止时间。`;
+      $('output').value = text; $('output').classList.remove('empty');
+    }
+    $('generate').onclick = generate;
+    $('fill').onclick = () => { $('role').value='运营 / 8 月活动筹备'; $('done').value='完成活动主视觉初稿\n和设计确认了 3 个修改点\n整理了 12 位达人名单'; $('result').value='主视觉已通过第一轮评审\n达人名单覆盖率 80%'; $('blocker').value='还缺产品最终卖点，需要产品同学周二前确认'; $('next').value='根据反馈改第二版主视觉\n完成达人分层并发出首批邀约'; generate(); };
+    $('clear').onclick = () => { ['role','done','result','blocker','next'].forEach(id => $(id).value=''); $('tone').value='steady'; $('output').value='填左侧内容后，点击“生成周报初稿”。'; $('output').classList.add('empty'); };
+    $('copy').onclick = async () => { try { await navigator.clipboard.writeText($('output').value); $('copy').textContent='已复制'; setTimeout(()=> $('copy').textContent='复制内容',1300); } catch { $('output').select(); document.execCommand('copy'); } };
+  </script>
+</body>
+</html>

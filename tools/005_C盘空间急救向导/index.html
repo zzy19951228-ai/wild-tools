@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>C盘空间急救向导｜工具 #002</title>
+<style>
+  :root { --ink:#17172A; --orange:#FF5A36; --cream:#FFF6EC; --muted:#6b6672; --ok:#2f9e6e; --warn:#c98a00; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8d9 100%); color:var(--ink); }
+  main { max-width:980px; margin:0 auto; padding:34px 20px 60px; }
+  .tag { display:inline-block; padding:7px 13px; border-radius:99px; background:var(--ink); color:#fff; font-weight:800; font-size:13px; letter-spacing:1px; }
+  h1 { font-size:clamp(28px,5.5vw,46px); letter-spacing:-1.5px; margin:12px 0 8px; }
+  .lead { color:var(--muted); font-size:15.5px; line-height:1.75; max-width:720px; }
+  .lead b { color:var(--orange); }
+  .privacy { margin:18px 0 26px; padding:13px 16px; border:2px dashed var(--ink); border-radius:13px; font-size:13.5px; line-height:1.7; background:rgba(255,255,255,.7); max-width:720px; }
+  h2.sec { font-size:20px; margin:30px 0 4px; display:flex; align-items:center; gap:9px; }
+  h2.sec::before { content:"▸"; color:var(--orange); }
+  .sec-sub { color:var(--muted); font-size:13px; margin:0 0 12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+  .item { border:2px solid var(--ink); border-radius:13px; background:#fff; padding:13px 15px; cursor:pointer; transition:transform .12s, box-shadow .12s; }
+  .item:hover { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(23,23,42,.16); }
+  .item input { margin-right:9px; transform:scale(1.2); accent-color:var(--orange); }
+  .item .nm { font-weight:800; font-size:15px; }
+  .item .est { display:block; color:var(--orange); font-weight:800; font-size:12.5px; margin-top:4px; }
+  .item .rk { float:right; font-size:11.5px; padding:2px 9px; border-radius:99px; font-weight:800; }
+  .rk.low { background:#e3f5ec; color:var(--ok); }
+  .rk.mid { background:#fff3d6; color:var(--warn); }
+  .rk.adv { background:#fde3dc; color:var(--orange); }
+  #go { margin:30px 0; display:block; width:100%; max-width:420px; padding:16px; font-size:18px; font-weight:900; letter-spacing:2px; color:#fff; background:var(--orange); border:3px solid var(--ink); border-radius:14px; cursor:pointer; box-shadow:5px 6px 0 var(--ink); }
+  #go:active { transform:translate(3px,4px); box-shadow:none; }
+  .plan { border:3px solid var(--ink); border-radius:16px; background:#fff; overflow:hidden; }
+  .plan-head { padding:16px 20px; background:var(--ink); color:#fff; }
+  .plan-head .tot { font-size:24px; font-weight:900; color:var(--yellow); }
+  .step { padding:15px 20px; border-top:1.5px solid #e8e4dd; }
+  .step h3 { margin:0 0 5px; font-size:16.5px; display:flex; justify-content:space-between; align-items:baseline; }
+  .step h3 .gain { color:var(--orange); font-size:14px; white-space:nowrap; }
+  .step p { margin:0 0 8px; font-size:14px; line-height:1.65; color:#3c3844; }
+  pre { position:relative; background:#211f33; color:#e8e6f0; border-radius:10px; padding:13px 15px; font-size:12.8px; line-height:1.6; overflow-x:auto; margin:8px 0 0; }
+  pre .cp { position:absolute; top:7px; right:8px; font-size:11px; background:#3a3752; color:#fff; border:none; border-radius:7px; padding:4px 10px; cursor:pointer; }
+  .never { border:3px solid #b3261e; border-radius:16px; background:#fff5f4; padding:6px 22px 16px; margin-top:30px; }
+  .never li { margin:9px 0; font-size:14.5px; line-height:1.65; }
+  .never b { color:#b3261e; }
+  footer { margin-top:34px; padding-top:18px; border-top:2px solid rgba(23,23,42,.14); color:var(--muted); font-size:13px; line-height:1.8; }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">工具 #002 · 真麻烦解决</span>
+  <h1>C盘空间急救向导</h1>
+  <p class="lead">C盘红得发紫，<b>先别装"清理大师"</b>。勾选下面你电脑里有的东西，我给你生成一张按"能省多少"排序的安全清理清单——每一步都<b>先看后删</b>，删不删你说了算。</p>
+  <div class="privacy"><b>隐私边界（先读这句）：</b>这是个本地网页，碰不到你的硬盘——这是好事。它不扫描、不联网、不自动删除任何文件；它只把"该清理哪里"变成一张你能看懂的清单，命令复制到你自己的终端里跑。</div>
+
+  <h2 class="sec">第一步：勾选你电脑里有的</h2>
+  <p class="sec-sub">不确定的就不勾，清单里不会出现你不认识的东西。</p>
+  <div class="grid" id="opts"></div>
+  <button id="go">生成我的安全清理清单 →</button>
+  <div id="plan" style="display:none"></div>
+
+  <div class="never">
+    <h2 class="sec" style="color:#b3261e">🚫 别删清单（重要程度不亚于上面）</h2>
+    <ul>
+      <li><b>WinSxS 文件夹</b>不要手动删——那是系统组件库，手删必坏。想瘦身只用系统命令：<pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup<button class="cp">复制</button></pre></li>
+      <li><b>pagefile.sys / swapfile.sys</b> 不要直接删——通过"系统属性→高级→虚拟内存"调整。</li>
+      <li><b>AppData 整个文件夹</b>不要删——软件配置全在里面，删完一堆软件失忆。</li>
+      <li><b>"C盘搬家 / 一键深度清理"类软件</b>本身慎装——很多是弹窗广告和流氓捆绑的源头，这向导存在的意义就是让你不用装它们。</li>
+    </ul>
+  </div>
+
+  <footer>
+    工具 #002 ｜野生 AI 工具匠 · 日常有个麻烦？我试着把它做成工具。<br/>
+    用 AI 辅助开发；不扫描你的电脑、不联网、不自动删除任何文件。所有命令默认"只看不删"，去掉 <b>-WhatIf</b> 才会真正执行删除。下一个该造什么？评论区可以点单。
+  </footer>
+</main>
+<script>
+const ITEMS = [
+  // 开发者
+  {g:"开发者", id:"wechat", nm:"微信（常年在C盘吃空间大户）", est:"5–80 GB", lo:30, rk:"low", how:"微信文件夹经常是全盘最大的隐藏文件夹。先在 微信→设置→文件管理 里看占用，然后<b>迁移到 D 盘</b>，再清理历史文件。", cmd:null},
+  {g:"开发者", id:"npm", nm:"Node.js / npm 缓存", est:"1–10 GB", lo:4, rk:"low", how:"先验证缓存大小，再清：", cmd:"npm cache verify\n:: 确认后清理\nnpm cache clean --force"},
+  {g:"开发者", id:"pip", nm:"Python / pip 缓存", est:"0.5–5 GB", lo:2, rk:"low", how:"看一眼占了多少，再清：", cmd:"pip cache info\n:: 确认后清理\npip cache purge"},
+  {g:"开发者", id:"docker", nm:"Docker Desktop", est:"5–50 GB", lo:15, rk:"mid", how:"<b>风险中：会删掉未使用的镜像/容器</b>。先看占用分布：", cmd:"docker system df\n:: 确认后清理未使用的资源\ndocker system prune"},
+  {g:"开发者", id:"ide", nm:"JetBrains / VSCode 缓存", est:"1–10 GB", lo:3, rk:"low", how:"IDE 里操作最稳：JetBrains 菜单 File → Invalidate Caches；VSCode 删 %APPDATA%\Code\Cache* （IDE 关闭后）。"},
+  // 办公
+  {g:"办公", id:"qq", nm:"QQ / TIM 文件", est:"2–30 GB", lo:8, rk:"low", how:"同微信：设置里把文件存储路径迁去 D 盘，再清历史。"},
+  {g:"办公", id:"recycle", nm:"回收站", est:"0–10 GB", lo:3, rk:"low", how:"先预览会清掉什么（-WhatIf 只看不删）：", cmd:"Clear-RecycleBin -DriveLetter C -WhatIf\n:: 看完没问题，去掉 -WhatIf 再跑"},
+  {g:"办公", id:"downloads", nm:"下载文件夹（自己动手）", est:"1–20 GB", lo:5, rk:"low", how:"列出最大的 20 个文件，自己挑着删（这条命令永远只看不删）：", cmd:"Get-ChildItem ~\Downloads -Recurse -File | Sort-Object Length -Descending | Select-Object -First 20 @{n='GB';e={[math]::Round($_.Length/1GB,2)}}, FullName"},
+  // 大文件
+  {g:"大文件", id:"steam", nm:"Steam 游戏", est:"10–100 GB", lo:25, rk:"low", how:"别卸载！Steam → 设置 → 存储 → 添加 D 盘库 → 右键游戏→属性→移动。"},
+  {g:"大文件", id:"browser", nm:"浏览器缓存", est:"0.5–3 GB", lo:1.5, rk:"low", how:"浏览器内操作：设置→隐私→清除浏览数据→只勾"缓存"。"},
+  // 系统
+  {g:"系统", id:"wupdate", nm:"Windows 更新残留", est:"2–15 GB", lo:6, rk:"low", how:"系统自带，最稳：设置 → 系统 → 存储 → 清理建议。命令行版：", cmd:"Dism.exe /Online /Cleanup-Image /StartComponentCleanup"},
+  {g:"系统", id:"temp", nm:"临时文件夹 %TEMP%", est:"1–10 GB", lo:4, rk:"low", how:"先看占了多少（只读）：", cmd:"Get-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum | %{ "TEMP 占用 {0:N1} GB" -f ($_.Sum/1GB) }\n:: 清理 7 天前的临时文件，先加 -WhatIf 预览\nGet-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-7)} | Remove-Item -Recurse -WhatIf"},
+  {g:"系统", id:"hib", nm:"休眠文件 hiberfil.sys", est:"内存的 40–75%", lo:12, rk:"mid", how:"<b>风险中：关闭后"休眠"功能不可用（睡眠不受影响）</b>。不用休眠才关：", cmd:"powercfg /h off"},
+];
+const G = {"开发者":[], "办公":[], "大文件":[], "系统":[]};
+ITEMS.forEach(x => G[x.g].push(x));
+const box = document.getElementById('opts');
+Object.entries(G).forEach(([g, list]) => {
+  const h = document.createElement('h2'); h.className='sec'; h.style.marginTop='22px'; h.textContent=g;
+  box.appendChild(h);
+  const wrap = document.createElement('div'); wrap.className='grid';
+  list.forEach(x => {
+    const l = document.createElement('label'); l.className='item';
+    l.innerHTML = '<input type="checkbox" value="'+x.id+'"><span class="nm">'+x.nm+'</span><span class="est">≈ 可回收 '+x.est+'</span><span class="rk '+x.rk+'">'+(x.rk==='low'?'低风险':x.rk==='mid'?'中风险':'进阶')+'</span>';
+    wrap.appendChild(l);
+  });
+  box.appendChild(wrap);
+});
+document.getElementById('go').onclick = () => {
+  const sel = [...document.querySelectorAll('input:checked')].map(i=>i.value);
+  const picks = ITEMS.filter(x=>sel.includes(x.id)).sort((a,b)=>b.lo-a.lo);
+  const p = document.getElementById('plan');
+  if(!picks.length){ p.style.display='block'; p.innerHTML='<div class="plan"><div class="plan-head">先勾选上面的项目，清单才会生成 🙂</div></div>'; return; }
+  const min = picks.reduce((s,x)=>s+x.lo*0.6,0), max = picks.reduce((s,x)=>s+x.lo*2,0);
+  let html = '<div class="plan"><div class="plan-head"><div style="font-size:13px;opacity:.75;margin-bottom:4px">你的安全清理清单 · 按能省多少排序 · 共 '+picks.length+' 项</div><div class="tot">预计可回收 '+min.toFixed(0)+'–'+max.toFixed(0)+' GB</div><div style="font-size:12px;opacity:.7;margin-top:5px">所有命令默认"先看后删"；带 -WhatIf 的命令去掉该参数才会真删。</div></div>';
+  picks.forEach((x,i) => {
+    html += '<div class="step"><h3>'+(i+1)+'. '+x.nm+'<span class="gain">≈ '+x.est+'</span></h3><p>'+x.how+'</p>'+(x.cmd?'<pre><button class="cp">复制</button>'+x.cmd.replace(/\n/g,'<br>')+'</pre>':'')+'</div>';
+  });
+  html += '</div>';
+  p.innerHTML = html; p.style.display='block';
+  p.scrollIntoView({behavior:'smooth'});
+  p.querySelectorAll('pre .cp').forEach(b => b.onclick = () => {
+    const lines=[...b.parentElement.childNodes].filter(n=>n.nodeType===3||n.tagName==='BR').map(n=>n.nodeType===3?n.textContent:'\n').join('');
+    navigator.clipboard.writeText(lines.replace(/\n\n/g,'\n'));
+    b.textContent='已复制✓'; setTimeout(()=>b.textContent='复制',1600);
+  });
+};
+</script>
+</body>
+</html>

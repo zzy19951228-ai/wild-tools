@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>野生工具铺｜日常有个麻烦？我试着把它做成工具</title>
+<style>
+:root{--ink:#17172A;--orange:#FF5A36;--cream:#FFF6EC;--muted:#6b6672;--yellow:#FFC53D}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8d9 100%);color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:40px 18px 70px}
+.tag{display:inline-block;padding:7px 13px;border-radius:99px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;letter-spacing:1px}
+h1{font-size:clamp(28px,5.5vw,46px);letter-spacing:-1.5px;margin:14px 0 8px}
+.lead{color:var(--muted);font-size:15.5px;line-height:1.75;max-width:680px}
+.lead b{color:var(--orange)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:28px}
+.card{background:#fff;border:2.5px solid var(--ink);border-radius:15px;padding:18px;text-decoration:none;color:var(--ink);display:block;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translateY(-3px);box-shadow:5px 6px 0 rgba(23,23,42,.16)}
+.card .no{font-size:12px;font-weight:900;color:var(--orange);letter-spacing:1px}
+.card h2{margin:6px 0 7px;font-size:18.5px}
+.card p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.65}
+.st{display:inline-block;margin-top:11px;font-size:12px;font-weight:900;padding:3px 11px;border-radius:99px}
+.st.pub{background:#e3f5ec;color:#2f9e6e}
+.st.coming{background:#fff3d6;color:#c98a00}
+.st.test{background:#fde3dc;color:var(--orange)}
+footer{margin-top:44px;padding-top:18px;border-top:2px solid rgba(23,23,42,.14);color:var(--muted);font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+<main>
+<span class="tag">工具 #001–#0XX · 持续造</span>
+<h1>野生工具铺</h1>
+<p class="lead">一个大模型应用开发工程师，把日常里<b>"要是有个小工具就好了"</b>的麻烦和怪点子，真的做出来。<b>全部本地运行、不上传数据</b>，点开就用。下一个造什么？欢迎点单。</p>
+<div class="grid">
+<a class="card" href="tools/001_周报急救箱/index.html"><span class="no">工具 #001</span><h2>周报急救箱</h2><p>周五想不起这周干了什么？把散碎记录拼成能直接交的周报。</p><span class="st pub">已发布</span></a>
+<a class="card" href="tools/005_C盘空间急救向导/index.html"><span class="no">工具 #002</span><h2>C盘空间急救向导</h2><p>C盘红了别乱删。勾选你装了什么，生成按"能省多少"排序的安全清理清单。</p><span class="st coming">8/29 首发</span></a>
+<a class="card" href="tools/006_岗位个人权重打分器/index.html"><span class="no">内测中</span><h2>岗位个人权重打分器</h2><p>没有最好的岗位，只有对你的权重最划算的岗位。设权重、逐岗打分、看排名。</p><span class="st test">🔬 内测</span></a>
+<a class="card" href="tools/003_会议行动项整理器/index.html"><span class="no">工具 #003</span><h2>会议行动项整理器</h2><p>开完会只留下三件事：谁负责、截止日、下一步。</p><span class="st coming">9/1 待发</span></a>
+<a class="card" href="tools/001_朋友局破冰按钮/index.html"><span class="no">工具 #004</span><h2>朋友局破冰按钮</h2><p>冷场了按一下，一道不尴尬的破冰题。</p><span class="st coming">9/5 待发</span></a>
+<a class="card" href="tools/002_催进度措辞器/index.html"><span class="no">工具 #005</span><h2>催进度措辞器</h2><p>催活也能好好说话：把"快点交"翻译成得体的提醒。</p><span class="st coming">待发</span></a>
+<a class="card" href="tools/004_今晚吃什么决策器/index.html"><span class="no">工具 #006</span><h2>今晚吃什么决策器</h2><p>预算、距离、忌口筛完再决定，告别"随便"。</p><span class="st coming">待发</span></a>
+</div>
+<footer>
+野生工具铺 ｜ 大模型应用工程师主理 ｜ 每周至少一件新工具<br/>
+所有工具均为网页版本地运行：数据不出你的浏览器，不上传任何服务器；用 AI 辅助开发，诚实标注边界。
+</footer>
+</main>
+</body>
+</html>

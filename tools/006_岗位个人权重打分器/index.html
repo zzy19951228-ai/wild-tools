@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>岗位个人权重打分器｜打工人决策台</title>
+<style>
+:root{--ink:#17172A;--orange:#FF5A36;--cream:#FFF6EC;--muted:#6b6672;--yellow:#FFC53D;--ok:#2f9e6e}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei",system-ui,sans-serif;background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8d9 100%);color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:32px 18px 60px}
+.tag{display:inline-block;padding:6px 12px;border-radius:99px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;letter-spacing:1px}
+h1{font-size:clamp(26px,5vw,42px);letter-spacing:-1px;margin:12px 0 8px}
+.lead{color:var(--muted);font-size:15px;line-height:1.75;max-width:700px}
+.lead b{color:var(--orange)}
+.privacy{margin:16px 0 24px;padding:12px 15px;border:2px dashed var(--ink);border-radius:12px;font-size:13px;line-height:1.7;background:rgba(255,255,255,.7);max-width:700px}
+h2.sec{font-size:19px;margin:28px 0 4px;display:flex;align-items:center;gap:8px}
+h2.sec::before{content:"▸";color:var(--orange)}
+.sec-sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.chip{padding:8px 16px;border:2px solid var(--ink);border-radius:99px;background:#fff;font-weight:800;font-size:14px;cursor:pointer}
+.chip.on{background:var(--ink);color:#fff}
+.wrow{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:10px 14px;margin:8px 0}
+.wrow .nm{font-weight:800;font-size:15px;width:110px;flex:none}
+.wrow input[type=range]{flex:1;accent-color:var(--orange)}
+.wrow .wv{width:64px;text-align:center;font-weight:900;color:var(--orange)}
+.add{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px;margin:10px 0}
+.add input{width:100%;border:1.5px solid #cfcbd0;border-radius:9px;padding:9px 12px;font-size:14px;margin:4px 0 10px}
+.srow{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+.srow .snm{font-size:13.5px;font-weight:700;width:110px}
+.pb{width:34px;height:34px;border:2px solid var(--ink);border-radius:8px;background:#fff;font-weight:900;cursor:pointer;font-size:14px}
+.pb.on{background:var(--orange);color:#fff;border-color:var(--orange)}
+#addBtn,#delAll{display:block;width:100%;padding:13px;font-size:16px;font-weight:900;border:3px solid var(--ink);border-radius:13px;cursor:pointer;margin-top:8px}
+#addBtn{background:var(--orange);color:#fff;box-shadow:4px 5px 0 var(--ink)}
+#delAll{background:#fff;color:var(--muted);font-size:13px;border-width:2px;margin-top:14px}
+.job{background:#fff;border:2px solid var(--ink);border-radius:13px;padding:13px 15px;margin:9px 0;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.job .jn{font-weight:900;font-size:16px}
+.job .jc{color:var(--muted);font-size:13px;margin-top:3px}
+.job .sc{font-weight:900;font-size:20px;color:var(--orange);white-space:nowrap}
+.job .del{border:none;background:none;color:#b3261e;cursor:pointer;font-size:12px;font-weight:800;padding:4px}
+.rank{border:3px solid var(--ink);border-radius:16px;background:#fff;overflow:hidden;margin-top:14px}
+.rank-head{padding:14px 18px;background:var(--ink);color:#fff}
+.rank-head .win{font-size:22px;font-weight:900;color:var(--yellow)}
+.rrow{padding:12px 18px;border-top:1.5px solid #e8e4dd}
+.rrow .rt{display:flex;justify-content:space-between;font-weight:800;font-size:15px;margin-bottom:6px}
+.bar{height:14px;border-radius:99px;background:#f0ece5;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--yellow),var(--orange))}
+.rrow .why{color:var(--muted);font-size:12.5px;margin-top:5px}
+footer{margin-top:32px;padding-top:16px;border-top:2px solid rgba(23,23,42,.14);color:var(--muted);font-size:13px;line-height:1.8}
+.hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<main>
+<span class="tag">求职决策工具</span>
+<h1>岗位个人权重打分器</h1>
+<p class="lead">没有"最好的岗位"，只有<b>对你的权衡来说最划算的岗位</b>。设好你在乎的点和比重，把候选岗位挨个打分，让它替你把纠结算清楚——<b>分数是你打的，工具只负责让它们能比</b>。</p>
+<div class="privacy"><b>隐私边界：</b>本地网页，所有数据只存在你自己的浏览器里（关掉也不会丢），不上传任何服务器。用 AI 辅助开发；工具不做岗位真伪判断，只做你个人权重的结构化比较。</div>
+
+<h2 class="sec">第一步：你在乎什么？各占多重？</h2>
+<p class="sec-sub">先点一个最像你的档位，再微调滑杆（0=不在乎，5=一票否决级重要）。</p>
+<div class="chips" id="chips"></div>
+<div id="weights"></div>
+
+<h2 class="sec">第二步：把候选岗位加进来，逐项打分</h2>
+<p class="sec-sub">每个维度按你的了解打 1–5 分；不了解就打 3，别猜。至少加 2 个岗位才能出结果。</p>
+<div class="add">
+  <input id="jName" placeholder="岗位名，如：AI 应用工程师"/>
+  <input id="jComp" placeholder="公司/来源（可选，如：BOSS 直聘-某教育公司）"/>
+  <div id="scoreRows"></div>
+  <button id="addBtn">＋ 加入对比列表</button>
+</div>
+<div id="jobs"></div>
+
+<h2 class="sec">第三步：结果</h2>
+<p class="sec-sub">加权总分排名 + 它为什么赢。回第一步换个档位试试——<b>排名变了，就是这工具存在的理由</b>。</p>
+<div id="result"></div>
+<p class="hint" id="flipHint" style="display:none">💡 试试切换第一行的档位（方向/钱/稳）——同一个列表，第一名会换人。这就是"每个人权重不同"的意思。</p>
+<button id="delAll">清空全部数据（本地）</button>
+
+<footer>
+打工人决策台 ｜日常有个麻烦？我试着把它做成工具。<br/>
+用 AI 辅助开发；不联网、不上传、不自动评估任何岗位——你打分，它算账。下一个该做什么？评论区可以点单。
+</footer>
+</main>
+<script>
+const DIMS=[["pay","薪资水平"],["loc","地点/通勤"],["dir","方向匹配"],["stb","稳定性"],["gro","成长空间"]];
+const PRESETS={dir:{pay:2,loc:2,dir:5,stb:2,gro:4,label:"方向优先"},pay:{pay:5,loc:2,dir:2,stb:2,gro:3,label:"钱优先"},stb:{pay:2,loc:4,dir:2,stb:5,gro:2,label:"稳优先"}};
+let S=JSON.parse(localStorage.getItem("jobScorer")||"null")||{w:{pay:3,loc:3,dir:5,stb:3,gro:3},preset:"dir",jobs:[]};
+const save=()=>localStorage.setItem("jobScorer",JSON.stringify(S));
+const $=id=>document.getElementById(id);
+// 权重区
+function renderW(){
+  $("chips").innerHTML=Object.entries(PRESETS).map(([k,p])=>'<button class="chip'+(S.preset===k?" on":"")+'" data-k="'+k+'">'+p.label+'</button>').join("")+'<button class="chip'+(S.preset?"":" on")+'" data-k="custom">自定义</button>';
+  $("chips").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const k=c.dataset.k;S.preset=k==="custom"?"":k;if(k!=="custom")S.w={...PRESETS[k].w};save();renderW();renderAll();});
+  $("weights").innerHTML=DIMS.map(([k,n])=>'<div class="wrow"><span class="nm">'+n+'</span><input type="range" min="0" max="5" value="'+S.w[k]+'" data-k="'+k+'"><span class="wv">权重 '+S.w[k]+'</span></div>').join("");
+  $("weights").querySelectorAll("input").forEach(r=>r.oninput=()=>{S.w[r.dataset.k]=+r.value;S.preset="";save();renderW();renderAll();});
+}
+// 添加区打分
+let tmp={};
+function renderAdd(){
+  $("scoreRows").innerHTML=DIMS.map(([k,n])=>'<div class="srow"><span class="snm">'+n+'</span>'+[1,2,3,4,5].map(v=>'<button class="pb'+(tmp[k]===v?" on":"")+'" data-k="'+k+'" data-v="'+v+'">'+v+'</button>').join("")+"</div>").join("");
+  $("scoreRows").querySelectorAll(".pb").forEach(b=>b.onclick=()=>{tmp[b.dataset.k]=+b.dataset.v;renderAdd();});
+}
+$("addBtn").onclick=()=>{
+  const n=$("jName").value.trim();if(!n){$("jName").focus();return;}
+  if(DIMS.some(([k])=>!tmp[k])){alert("每个维度都打个分（不了解打 3）");return;}
+  S.jobs.push({n,c:$("jComp").value.trim(),s:{...tmp}});tmp={};$("jName").value="";$("jComp").value="";save();renderAll();
+};
+// 岗位列表
+function renderJobs(){
+  $("jobs").innerHTML=S.jobs.map((j,i)=>'<div class="job"><div><div class="jn">'+esc(j.n)+'</div><div class="jc">'+esc(j.c||"—")+'</div></div><div style="display:flex;align-items:center;gap:12px"><span class="sc">'+total(j).toFixed(1)+' 分</span><button class="del" data-i="'+i+'">删除</button></div></div>').join("");
+  $("jobs").querySelectorAll(".del").forEach(b=>b.onclick=()=>{S.jobs.splice(+b.dataset.i,1);save();renderAll();});
+}
+function total(j){return DIMS.reduce((s,[k])=>s+S.w[k]*j.s[k],0);}
+function esc(s){return String(s).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));}
+// 结果
+function renderRes(){
+  const r=$("result");
+  if(S.jobs.length<2){r.innerHTML='<div class="rank"><div class="rank-head">加入至少 2 个岗位，结果自动出现 🙂</div></div>';$("flipHint").style.display="none";return;}
+  const sorted=[...S.jobs].map(j=>({j,t:total(j)})).sort((a,b)=>b.t-a.t);
+  const max=sorted[0].t||1;
+  const win=sorted[0].j;
+  const contrib=DIMS.map(([k,n])=>({n,v:S.w[k]*win.s[k]})).sort((a,b)=>b.v-a.v).slice(0,2).map(x=>x.n+"（权重"+S.w[DIMS.find(d=>d[1]===x.n)[0]]+"×打分"+win.s[DIMS.find(d=>d[1]===x.n)[0]]+"）").join("、");
+  r.innerHTML='<div class="rank"><div class="rank-head"><div style="font-size:13px;opacity:.75;margin-bottom:4px">按你的权重算出来的排名</div><div class="win">🥇 '+esc(win.n)+(win.c?" · "+esc(win.c):"")+'</div><div style="font-size:12px;opacity:.8;margin-top:5px">它赢在：'+contrib+'</div></div>'+
+    sorted.map((x,i)=>'<div class="rrow"><div class="rt"><span>'+(i+1)+'. '+esc(x.j.n)+'</span><span>'+x.t.toFixed(1)+'</span></div><div class="bar"><i style="width:'+(x.t/max*100)+'%"></i></div></div>').join("")+"</div>";
+  $("flipHint").style.display=S.jobs.length>=2?"block":"none";
+}
+function renderAll(){renderJobs();renderRes();}
+$("delAll").onclick=()=>{if(confirm("确定清空全部本地数据？")){S={w:{pay:3,loc:3,dir:5,stb:3,gro:3},preset:"dir",jobs:[]};save();tmp={};renderW();renderAdd();renderAll();}};
+renderW();renderAdd();renderAll();
+</script>
+</body>
+</html>
