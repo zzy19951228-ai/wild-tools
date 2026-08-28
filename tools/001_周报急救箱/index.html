@@ -1,32 +1,32 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>周报急救箱｜工具 #001</title>
   <style>
-    :root { --ink:#17172A; --orange:#FF5A36; --cream:#FFF6EC; --yellow:#FFC53D; --muted:#6d6c78; }
+    :root { --ink:#C7D3E8; --orange:#4D6BFE; --cream:#FFF6EC; --yellow:#5AC8FA; --muted:#8A94A8; }
     * { box-sizing:border-box; }
-    body { margin:0; background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8dd 100%); color:var(--ink); font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+    body { margin:0; background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#16223A 100%); color:var(--ink); font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
     main { max-width:1040px; margin:0 auto; padding:32px 20px 54px; }
     header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:24px; }
     .tag { display:inline-block; padding:7px 12px; border-radius:99px; background:var(--orange); color:#fff; font-size:13px; font-weight:800; }
     h1 { font-size:clamp(30px,6vw,52px); letter-spacing:-2px; margin:10px 0 8px; }
     .lead { margin:0; color:var(--muted); font-size:16px; line-height:1.7; }
-    .privacy { max-width:250px; padding:12px 14px; border:2px solid var(--ink); border-radius:14px; font-size:13px; line-height:1.55; background:#fff; }
+    .privacy { max-width:250px; padding:12px 14px; border:2px solid var(--ink); border-radius:14px; font-size:13px; line-height:1.55; background:#141F33; }
     .privacy b { color:var(--orange); }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-    .card { background:rgba(255,255,255,.84); border:2px solid var(--ink); border-radius:20px; padding:22px; box-shadow:7px 7px 0 var(--ink); }
+    .card { background:rgba(20,31,51,.85); border:2px solid var(--ink); border-radius:20px; padding:22px; box-shadow:7px 7px 0 var(--ink); }
     .card h2 { margin:0 0 7px; font-size:21px; }
     .hint { margin:0 0 15px; color:var(--muted); font-size:13px; line-height:1.6; }
     label { display:block; margin:16px 0 7px; font-weight:800; font-size:15px; }
-    textarea, select { width:100%; border:1.5px solid #cfcbd0; border-radius:11px; padding:12px; color:var(--ink); font:inherit; background:#fff; }
+    textarea, select { width:100%; border:1.5px solid #31435F; border-radius:11px; padding:12px; color:var(--ink); font:inherit; background:#141F33; }
     textarea { min-height:92px; resize:vertical; line-height:1.6; }
-    textarea:focus,select:focus { outline:3px solid #ffd3c7; border-color:var(--orange); }
+    textarea:focus,select:focus { outline:3px solid #2E4270; border-color:var(--orange); }
     .buttonrow { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
     button { border:2px solid var(--ink); border-radius:12px; padding:12px 17px; background:var(--yellow); color:var(--ink); font:inherit; font-weight:800; cursor:pointer; box-shadow:3px 3px 0 var(--ink); }
     button:hover { transform:translate(1px,1px); box-shadow:2px 2px 0 var(--ink); }
-    button.secondary { background:#fff; }
+    button.secondary { background:#141F33; }
     #output { min-height:480px; white-space:pre-wrap; font-family:"Microsoft YaHei","PingFang SC",sans-serif; font-size:15px; }
     .empty { color:var(--muted); }
     footer { margin-top:27px; color:var(--muted); font-size:13px; line-height:1.7; }
@@ -48,7 +48,7 @@
         <h2>先丢碎片，再整理</h2>
         <p class="hint">不用写完整句。每行一件事；工具只会重组你填的内容，不会编造不存在的成果。</p>
         <label for="role">你的角色 / 本周主题</label>
-        <input id="role" aria-label="你的角色或本周主题" placeholder="例如：运营 / 8 月活动筹备" style="width:100%;border:1.5px solid #cfcbd0;border-radius:11px;padding:12px;font:inherit" />
+        <input id="role" aria-label="你的角色或本周主题" placeholder="例如：运营 / 8 月活动筹备" style="width:100%;border:1.5px solid #31435F;border-radius:11px;padding:12px;font:inherit" />
         <label for="done">这周推进了什么？</label>
         <textarea id="done" placeholder="例如：完成活动主视觉初稿&#10;和设计确认了 3 个修改点&#10;整理了 12 位达人名单"></textarea>
         <label for="result">有什么结果 / 数据？（可空）</label>

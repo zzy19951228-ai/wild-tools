@@ -1,46 +1,46 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>C盘空间急救向导｜工具 #002</title>
 <style>
-  :root { --ink:#17172A; --orange:#FF5A36; --cream:#FFF6EC; --muted:#6b6672; --ok:#2f9e6e; --warn:#c98a00; }
+  :root { --ink:#C7D3E8; --orange:#4D6BFE; --cream:#FFF6EC; --muted:#8A94A8; --ok:#34C98E; --warn:#E8B84B; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; background:linear-gradient(135deg,#fff6ec 0%,#fff 55%,#ffe8d9 100%); color:var(--ink); }
+  body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; background:linear-gradient(160deg,#0B1220 0%,#101B30 55%,#0B1220 100%); color:var(--ink); }
   main { max-width:980px; margin:0 auto; padding:34px 20px 60px; }
   .tag { display:inline-block; padding:7px 13px; border-radius:99px; background:var(--ink); color:#fff; font-weight:800; font-size:13px; letter-spacing:1px; }
   h1 { font-size:clamp(28px,5.5vw,46px); letter-spacing:-1.5px; margin:12px 0 8px; }
   .lead { color:var(--muted); font-size:15.5px; line-height:1.75; max-width:720px; }
   .lead b { color:var(--orange); }
-  .privacy { margin:18px 0 26px; padding:13px 16px; border:2px dashed var(--ink); border-radius:13px; font-size:13.5px; line-height:1.7; background:rgba(255,255,255,.7); max-width:720px; }
+  .privacy { margin:18px 0 26px; padding:13px 16px; border:2px dashed var(--ink); border-radius:13px; font-size:13.5px; line-height:1.7; background:rgba(20,31,51,.8); max-width:720px; }
   h2.sec { font-size:20px; margin:30px 0 4px; display:flex; align-items:center; gap:9px; }
   h2.sec::before { content:"▸"; color:var(--orange); }
   .sec-sub { color:var(--muted); font-size:13px; margin:0 0 12px; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
-  .item { border:2px solid var(--ink); border-radius:13px; background:#fff; padding:13px 15px; cursor:pointer; transition:transform .12s, box-shadow .12s; }
-  .item:hover { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(23,23,42,.16); }
+  .item { border:2px solid var(--ink); border-radius:13px; background:#141F33; padding:13px 15px; cursor:pointer; transition:transform .12s, box-shadow .12s; }
+  .item:hover { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(0,0,0,.45); }
   .item input { margin-right:9px; transform:scale(1.2); accent-color:var(--orange); }
   .item .nm { font-weight:800; font-size:15px; }
   .item .est { display:block; color:var(--orange); font-weight:800; font-size:12.5px; margin-top:4px; }
   .item .rk { float:right; font-size:11.5px; padding:2px 9px; border-radius:99px; font-weight:800; }
-  .rk.low { background:#e3f5ec; color:var(--ok); }
-  .rk.mid { background:#fff3d6; color:var(--warn); }
-  .rk.adv { background:#fde3dc; color:var(--orange); }
+  .rk.low { background:#173229; color:var(--ok); }
+  .rk.mid { background:#141F333d6; color:var(--warn); }
+  .rk.adv { background:#3A2A38; color:var(--orange); }
   #go { margin:30px 0; display:block; width:100%; max-width:420px; padding:16px; font-size:18px; font-weight:900; letter-spacing:2px; color:#fff; background:var(--orange); border:3px solid var(--ink); border-radius:14px; cursor:pointer; box-shadow:5px 6px 0 var(--ink); }
   #go:active { transform:translate(3px,4px); box-shadow:none; }
-  .plan { border:3px solid var(--ink); border-radius:16px; background:#fff; overflow:hidden; }
+  .plan { border:3px solid var(--ink); border-radius:16px; background:#141F33; overflow:hidden; }
   .plan-head { padding:16px 20px; background:var(--ink); color:#fff; }
   .plan-head .tot { font-size:24px; font-weight:900; color:var(--yellow); }
-  .step { padding:15px 20px; border-top:1.5px solid #e8e4dd; }
+  .step { padding:15px 20px; border-top:1.5px solid #243654; }
   .step h3 { margin:0 0 5px; font-size:16.5px; display:flex; justify-content:space-between; align-items:baseline; }
   .step h3 .gain { color:var(--orange); font-size:14px; white-space:nowrap; }
-  .step p { margin:0 0 8px; font-size:14px; line-height:1.65; color:#3c3844; }
-  pre { position:relative; background:#211f33; color:#e8e6f0; border-radius:10px; padding:13px 15px; font-size:12.8px; line-height:1.6; overflow-x:auto; margin:8px 0 0; }
-  pre .cp { position:absolute; top:7px; right:8px; font-size:11px; background:#3a3752; color:#fff; border:none; border-radius:7px; padding:4px 10px; cursor:pointer; }
-  .never { border:3px solid #b3261e; border-radius:16px; background:#fff5f4; padding:6px 22px 16px; margin-top:30px; }
+  .step p { margin:0 0 8px; font-size:14px; line-height:1.65; color:#B9C6DC; }
+  pre { position:relative; background:#0D1526; color:#C7D3E8; border-radius:10px; padding:13px 15px; font-size:12.8px; line-height:1.6; overflow-x:auto; margin:8px 0 0; }
+  pre .cp { position:absolute; top:7px; right:8px; font-size:11px; background:#2A3A55; color:#fff; border:none; border-radius:7px; padding:4px 10px; cursor:pointer; }
+  .never { border:3px solid #FF7A7A; border-radius:16px; background:#141F335f4; padding:6px 22px 16px; margin-top:30px; }
   .never li { margin:9px 0; font-size:14.5px; line-height:1.65; }
-  .never b { color:#b3261e; }
+  .never b { color:#FF7A7A; }
   footer { margin-top:34px; padding-top:18px; border-top:2px solid rgba(23,23,42,.14); color:var(--muted); font-size:13px; line-height:1.8; }
 </style>
 </head>
@@ -58,7 +58,7 @@
   <div id="plan" style="display:none"></div>
 
   <div class="never">
-    <h2 class="sec" style="color:#b3261e">🚫 别删清单（重要程度不亚于上面）</h2>
+    <h2 class="sec" style="color:#FF7A7A">🚫 别删清单（重要程度不亚于上面）</h2>
     <ul>
       <li><b>WinSxS 文件夹</b>不要手动删——那是系统组件库，手删必坏。想瘦身只用系统命令：<pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup<button class="cp">复制</button></pre></li>
       <li><b>pagefile.sys / swapfile.sys</b> 不要直接删——通过"系统属性→高级→虚拟内存"调整。</li>
