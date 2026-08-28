@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>岗位个人权重打分器｜野生工具铺</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235B7FFF'/%3E%3Cstop offset='1' stop-color='%237B5FFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3C/svg%3E"/>
 <style>
 :root{
   --bg:#0A0F1C;--bg-glow:rgba(91,127,255,.07);
@@ -51,7 +52,9 @@ h2.sec{font-size:17px;font-weight:650;margin:0 0 4px;color:var(--text)}
 .wrow{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r-md);padding:11px 16px;margin:8px 0;transition:border-color .18s}
 .wrow:hover{border-color:var(--line)}
 .wrow .nm{font-weight:600;font-size:13.5px;width:96px;flex:none;color:var(--dim)}
-.wrow input[type=range]{flex:1;accent-color:var(--accent);height:4px}
+.wrow input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--accent) var(--p,50%),rgba(148,163,198,.15) var(--p,50%));outline:none}
+.wrow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:99px;background:#fff;box-shadow:0 0 0 4px rgba(91,127,255,.25),0 2px 8px rgba(0,0,0,.5);cursor:pointer;transition:box-shadow .15s}
+.wrow input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 7px rgba(91,127,255,.3),0 2px 8px rgba(0,0,0,.5)}
 .wrow .wv{width:58px;text-align:right;font-weight:700;color:var(--accent-2);font-size:12.5px;font-variant-numeric:tabular-nums}
 textarea,input[type=text],input[type=password]{width:100%;border:1px solid var(--line);border-radius:var(--r-md);padding:11px 14px;font-size:13.5px;margin:5px 0 9px;font-family:inherit;background:rgba(10,15,28,.55);color:var(--text);transition:border-color .18s,box-shadow .18s}
 textarea:focus,input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,127,255,.15)}
@@ -258,8 +261,8 @@ $("testBtn").onclick=async function(){readCfgInputs();if(!S.cfg.key||!S.cfg.base
 function renderW(){
  $("chips").innerHTML=Object.entries(PRESETS).map(function(e){return '<button class="chip'+(S.preset===e[0]?" on":"")+'" data-k="'+e[0]+'">'+e[1].label+"</button>"}).join("")+'<button class="chip'+(S.preset?"":" on")+'" data-k="c">自定义</button>';
  $("chips").querySelectorAll(".chip").forEach(function(c){c.onclick=function(){var k=c.dataset.k;S.preset=(k==="c")?"":k;if(k!=="c")S.w=Object.assign({},PRESETS[k].w);save();renderW();renderAll()}});
- $("weights").innerHTML=DIMS.map(function(d){return '<div class="wrow"><span class="nm">'+d[1]+'</span><input type="range" min="0" max="5" value="'+S.w[d[0]]+'" data-k="'+d[0]+'"><span class="wv">权重 '+S.w[d[0]]+"</span></div>"}).join("");
- $("weights").querySelectorAll("input").forEach(function(r){r.oninput=function(){S.w[r.dataset.k]=+r.value;S.preset="";save();renderW();renderAll()}})
+ $("weights").innerHTML=DIMS.map(function(d){return '<div class="wrow"><span class="nm">'+d[1]+'</span><input type="range" min="0" max="5" value="'+S.w[d[0]]+'" data-k="'+d[0]+'" style="--p:'+(S.w[d[0]]/5*100)+'%"><span class="wv">权重 '+S.w[d[0]]+"</span></div>"}).join("");
+ $("weights").querySelectorAll("input").forEach(function(r){r.oninput=function(){S.w[r.dataset.k]=+r.value;S.preset="";r.style.setProperty("--p",(r.value/5*100)+"%");save();renderW();renderAll()}})
 }
 var parseTimer=null;
 function setParseBusy(b){$("parseBtn").disabled=b;$("parseBtn").textContent=b?"⏳ 解析中…":"🤖 AI 解析并打分";if(b){var t0=Date.now();parseTimer=setInterval(function(){st("parseStatus","","AI 解析中 "+Math.round((Date.now()-t0)/1000)+" 秒（慢模型可能 30 秒+）…")},1000)}else if(parseTimer){clearInterval(parseTimer)}}
@@ -314,6 +317,7 @@ $("addBtn").onclick=function(){var n=$("jName").value.trim();if(!n){$("jName").f
  tmp={};$("jName").value="";$("jComp").value="";$("jCity").value="";$("jSalMin").value="";$("jSalMax").value="";save();renderAll()};
 function total(j){return DIMS.reduce(function(s,d){return s+S.w[d[0]]*j.s[d[0]]},0)}
 function renderJobs(){
+ if(!S.jobs.length){$("jobs").innerHTML='<p class="hint" style="padding:18px 4px;border:1px dashed var(--line);border-radius:12px;text-align:center">列表还是空的——从上方 AI 解析或手动添加开始。</p>';return}
  $("jobs").innerHTML=S.jobs.map(function(j,i){return '<div class="job"><div><div class="jn">'+esc(j.n)+"</div>"+'<div class="jc">'+esc(j.c||"—")+(j.sal&&(j.sal.min||j.sal.max)?"｜"+(j.sal.min||"?")+"–"+(j.sal.max||"?")+"k":"")+(j.city?"｜"+esc(j.city):"")+'</div></div><div style="display:flex;align-items:center;gap:12px"><span class="sc">'+total(j).toFixed(1)+'</span><button class="del" data-i="'+i+'">删除</button></div></div>'}).join("");
  $("jobs").querySelectorAll(".del").forEach(function(b){b.onclick=function(){S.jobs.splice(+b.dataset.i,1);save();renderAll()}})
 }

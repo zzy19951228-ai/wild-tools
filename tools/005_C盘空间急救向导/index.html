@@ -1,77 +1,116 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>C盘空间急救向导｜工具 #002</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>C盘空间急救向导｜野生工具铺</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235B7FFF'/%3E%3Cstop offset='1' stop-color='%237B5FFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3C/svg%3E"/>
 <style>
-  :root { --ink:#C7D3E8; --orange:#4D6BFE; --cream:#1A2740; --muted:#8A94A8; --ok:#34C98E; --warn:#E8B84B; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:"Microsoft YaHei",system-ui,sans-serif; background:linear-gradient(160deg,#0B1220 0%,#101B30 55%,#0B1220 100%); color:var(--ink); }
-  main { max-width:980px; margin:0 auto; padding:34px 20px 60px; }
-  .tag { display:inline-block; padding:7px 13px; border-radius:99px; background:var(--ink); color:#fff; font-weight:800; font-size:13px; letter-spacing:1px; }
-  h1 { font-size:clamp(28px,5.5vw,46px); letter-spacing:-1.5px; margin:12px 0 8px; }
-  .lead { color:var(--muted); font-size:15.5px; line-height:1.75; max-width:720px; }
-  .lead b { color:var(--orange); }
-  .privacy { margin:18px 0 26px; padding:13px 16px; border:2px dashed var(--ink); border-radius:13px; font-size:13.5px; line-height:1.7; background:rgba(20,31,51,.8); max-width:720px; }
-  h2.sec { font-size:20px; margin:30px 0 4px; display:flex; align-items:center; gap:9px; }
-  h2.sec::before { content:"▸"; color:var(--orange); }
-  .sec-sub { color:var(--muted); font-size:13px; margin:0 0 12px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
-  .item { border:2px solid var(--ink); border-radius:13px; background:#141F33; padding:13px 15px; cursor:pointer; transition:transform .12s, box-shadow .12s; }
-  .item:hover { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(0,0,0,.45); }
-  .item input { margin-right:9px; transform:scale(1.2); accent-color:var(--orange); }
-  .item .nm { font-weight:800; font-size:15px; }
-  .item .est { display:block; color:var(--orange); font-weight:800; font-size:12.5px; margin-top:4px; }
-  .item .rk { float:right; font-size:11.5px; padding:2px 9px; border-radius:99px; font-weight:800; }
-  .rk.low { background:#173229; color:var(--ok); }
-  .rk.mid { background:#141F333d6; color:var(--warn); }
-  .rk.adv { background:#3A2A38; color:var(--orange); }
-  #go { margin:30px 0; display:block; width:100%; max-width:420px; padding:16px; font-size:18px; font-weight:900; letter-spacing:2px; color:#fff; background:var(--orange); border:3px solid var(--ink); border-radius:14px; cursor:pointer; box-shadow:5px 6px 0 var(--ink); }
-  #go:active { transform:translate(3px,4px); box-shadow:none; }
-  .plan { border:3px solid var(--ink); border-radius:16px; background:#141F33; overflow:hidden; }
-  .plan-head { padding:16px 20px; background:var(--ink); color:#fff; }
-  .plan-head .tot { font-size:24px; font-weight:900; color:var(--yellow); }
-  .step { padding:15px 20px; border-top:1.5px solid #243654; }
-  .step h3 { margin:0 0 5px; font-size:16.5px; display:flex; justify-content:space-between; align-items:baseline; }
-  .step h3 .gain { color:var(--orange); font-size:14px; white-space:nowrap; }
-  .step p { margin:0 0 8px; font-size:14px; line-height:1.65; color:#B9C6DC; }
-  pre { position:relative; background:#0D1526; color:#C7D3E8; border-radius:10px; padding:13px 15px; font-size:12.8px; line-height:1.6; overflow-x:auto; margin:8px 0 0; }
-  pre .cp { position:absolute; top:7px; right:8px; font-size:11px; background:#2A3A55; color:#fff; border:none; border-radius:7px; padding:4px 10px; cursor:pointer; }
-  .never { border:3px solid #FF7A7A; border-radius:16px; background:#141F335f4; padding:6px 22px 16px; margin-top:30px; }
-  .never li { margin:9px 0; font-size:14.5px; line-height:1.65; }
-  .never b { color:#FF7A7A; }
-  footer { margin-top:34px; padding-top:18px; border-top:2px solid rgba(23,23,42,.14); color:var(--muted); font-size:13px; line-height:1.8; }
+:root{
+  --bg:#0A0F1C;--surface:rgba(148,163,198,.055);--surface-2:rgba(148,163,198,.09);
+  --line:rgba(148,163,198,.14);--line-soft:rgba(148,163,198,.08);
+  --text:#EEF2FA;--dim:#A9B4C9;--muted:#66738C;
+  --accent:#5B7FFF;--accent-2:#38BDF8;--grad:linear-gradient(120deg,#5B7FFF,#7B5FFF);
+  --ok:#10B981;--warn:#E8B84B;--danger:#F87171;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(900px 480px at 50% -10%,rgba(91,127,255,.07),transparent 70%);pointer-events:none}
+.nav{position:relative;z-index:1;border-bottom:1px solid var(--line-soft)}
+.nav-in{max-width:1020px;margin:0 auto;padding:0 22px;height:58px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px;color:var(--text);text-decoration:none}
+.brand-mark{width:22px;height:22px;border-radius:6px;background:var(--grad);box-shadow:0 2px 10px rgba(91,127,255,.4)}
+.brand small{color:var(--muted);font-weight:500;font-size:11px}
+.nav-crumb{color:var(--muted);font-size:13px}.nav-crumb b{color:var(--dim);font-weight:600}
+main{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:44px 22px 70px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--accent-2);text-transform:uppercase;margin-bottom:10px}
+h1{font-size:clamp(26px,4.6vw,36px);font-weight:700;letter-spacing:-.02em;margin:0 0 12px;line-height:1.25}
+.lead{color:var(--dim);font-size:14.5px;max-width:640px;margin:0 0 16px}
+.lead b{color:var(--text);background:linear-gradient(120deg,#8FA8FF,#38BDF8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.trust{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px}
+.trust span{font-size:12px;color:var(--dim);background:var(--surface);border:1px solid var(--line-soft);padding:5px 12px;border-radius:99px}
+.privacy{margin:14px 0 0;padding:12px 15px;border:1px solid var(--line-soft);border-left:2px solid var(--accent);border-radius:9px;font-size:12.5px;line-height:1.75;background:var(--surface);color:var(--dim);max-width:680px}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--muted);margin:46px 0 6px}
+h2.sec{font-size:17px;font-weight:650;margin:0 0 4px}
+.sec-sub{color:var(--muted);font-size:12.5px;margin:0 0 14px}
+/* 勾选项卡片 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.item{border:1px solid var(--line-soft);border-radius:12px;background:var(--surface);padding:13px 15px;cursor:pointer;transition:transform .15s,border-color .15s,background .15s;display:block;position:relative}
+.item:hover{transform:translateY(-2px);border-color:rgba(91,127,255,.45)}
+.item:has(input:checked){border-color:rgba(91,127,255,.6);background:rgba(91,127,255,.08)}
+.item input{position:absolute;opacity:0;pointer-events:none}
+.item .tick{position:absolute;top:13px;right:13px;width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line);transition:.15s;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+.item:has(input:checked) .tick{background:var(--grad);border-color:transparent;color:#fff}
+.item .nm{font-weight:650;font-size:13.5px;padding-right:26px;display:block}
+.item .est{display:block;color:var(--accent-2);font-weight:700;font-size:11.5px;margin-top:4px}
+.item .rk{position:static;display:inline-block;margin-top:8px;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:99px;letter-spacing:.03em}
+.rk.low{background:rgba(16,185,129,.13);color:#6EE7B7}
+.rk.mid{background:rgba(232,184,75,.13);color:#F2CE7B}
+.rk.adv{background:rgba(248,113,113,.13);color:#FCA5A5}
+#go{display:block;width:100%;max-width:420px;margin:34px auto 0;padding:15px;font-size:15.5px;font-weight:700;letter-spacing:.02em;color:#fff;background:var(--grad);border:none;border-radius:13px;cursor:pointer;box-shadow:0 8px 26px rgba(91,127,255,.32);transition:.18s;font-family:inherit}
+#go:hover{filter:brightness(1.08)}
+#go:active{transform:translateY(1px)}
+/* 清单结果 */
+.plan{border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;margin-top:14px}
+.plan-head{padding:18px 22px;background:linear-gradient(180deg,rgba(91,127,255,.09),transparent);border-bottom:1px solid var(--line-soft)}
+.plan-head .tot{font-size:24px;font-weight:750;color:#fff}
+.plan-head .tot b{color:var(--accent-2)}
+.step{padding:15px 22px;border-top:1px solid var(--line-soft)}
+.step:first-child{border-top:none}
+.step h3{margin:0 0 6px;font-size:14.5px;font-weight:650;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.step h3 .gain{color:var(--accent-2);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.step p{margin:0 0 8px;font-size:13px;color:var(--dim);line-height:1.75}
+pre{position:relative;background:#070C16;border:1px solid var(--line-soft);color:#C9D6F2;border-radius:11px;padding:14px 16px;font-size:12.3px;line-height:1.7;overflow-x:auto;margin:10px 0 0}
+pre .cp{position:absolute;top:8px;right:8px;font-size:11px;background:var(--surface-2);color:var(--dim);border:1px solid var(--line);border-radius:7px;padding:3px 10px;cursor:pointer;font-family:inherit;transition:.15s}
+pre .cp:hover{color:var(--text);border-color:rgba(91,127,255,.5)}
+/* 别删清单 */
+.never{border:1px solid rgba(248,113,113,.3);border-radius:16px;background:rgba(248,113,113,.04);padding:8px 22px 18px;margin-top:36px}
+.never h2.sec{color:var(--danger)}
+.never li{margin:10px 0;font-size:13.5px;line-height:1.75;color:var(--dim)}
+.never b{color:var(--danger)}
+.tag{display:none}
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);color:var(--muted);font-size:12px;line-height:1.9}
+@media(max-width:560px){main{padding:30px 16px 56px}.step{padding:13px 16px}.plan-head{padding:14px 16px}}
 </style>
 </head>
 <body>
+<nav class="nav"><div class="nav-in">
+  <a class="brand" href="/"><span class="brand-mark"></span>野生工具铺<small>WILD TOOLS</small></a>
+  <span class="nav-crumb">/ <b>C盘空间急救向导</b></span>
+</div></nav>
 <main>
-  <span class="tag">工具 #002 · 真麻烦解决</span>
+<header class="hero">
+  <div class="eyebrow">System Tool · 电脑急救</div>
   <h1>C盘空间急救向导</h1>
-  <p class="lead">C盘红得发紫，<b>先别装"清理大师"</b>。勾选下面你电脑里有的东西，我给你生成一张按"能省多少"排序的安全清理清单——每一步都<b>先看后删</b>，删不删你说了算。</p>
-  <div class="privacy"><b>隐私边界（先读这句）：</b>这是个本地网页，碰不到你的硬盘——这是好事。它不扫描、不联网、不自动删除任何文件；它只把"该清理哪里"变成一张你能看懂的清单，命令复制到你自己的终端里跑。</div>
+  <p class="lead">C盘红得发紫，<b>先别装"清理大师"</b>。勾选你电脑里有的东西，生成一张按"能省多少"排序的安全清理清单——每一步都<b>先看后删</b>，删不删你说了算。</p>
+  <div class="trust"><span>🔒 不扫描你的硬盘</span><span>👁 所有命令先看后删</span><span>🚫 附"别删清单"</span></div>
+  <div class="privacy"><b>隐私边界：</b>这是个本地网页，碰不到你的硬盘——这是好事。它不扫描、不联网、不自动删除任何文件；只把"该清理哪里"变成一张你能看懂的清单，命令复制到你自己的终端里跑。</div>
+</header>
 
-  <h2 class="sec">第一步：勾选你电脑里有的</h2>
-  <p class="sec-sub">不确定的就不勾，清单里不会出现你不认识的东西。</p>
-  <div class="grid" id="opts"></div>
-  <button id="go">生成我的安全清理清单 →</button>
-  <div id="plan" style="display:none"></div>
+<div class="sec-label">STEP 01</div>
+<h2 class="sec">勾选你电脑里有的</h2>
+<p class="sec-sub">不确定的就不勾，清单里不会出现你不认识的东西。</p>
+<div id="opts"></div>
+<button id="go">生成我的安全清理清单 →</button>
+<div id="plan" style="display:none"></div>
 
-  <div class="never">
-    <h2 class="sec" style="color:#FF7A7A">🚫 别删清单（重要程度不亚于上面）</h2>
-    <ul>
-      <li><b>WinSxS 文件夹</b>不要手动删——那是系统组件库，手删必坏。想瘦身只用系统命令：<pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup<button class="cp">复制</button></pre></li>
-      <li><b>pagefile.sys / swapfile.sys</b> 不要直接删——通过"系统属性→高级→虚拟内存"调整。</li>
-      <li><b>AppData 整个文件夹</b>不要删——软件配置全在里面，删完一堆软件失忆。</li>
-      <li><b>"C盘搬家 / 一键深度清理"类软件</b>本身慎装——很多是弹窗广告和流氓捆绑的源头，这向导存在的意义就是让你不用装它们。</li>
-    </ul>
-  </div>
+<div class="sec-label">NEVER</div>
+<div class="never">
+  <h2 class="sec">🚫 别删清单（重要程度不亚于上面）</h2>
+  <ul>
+    <li><b>WinSxS 文件夹</b>不要手动删——那是系统组件库，手删必坏。想瘦身只用系统命令：<pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup<button class="cp">复制</button></pre></li>
+    <li><b>pagefile.sys / swapfile.sys</b> 不要直接删——通过"系统属性→高级→虚拟内存"调整。</li>
+    <li><b>AppData 整个文件夹</b>不要删——软件配置全在里面，删完一堆软件失忆。</li>
+    <li><b>"C盘搬家 / 一键深度清理"类软件</b>本身慎装——很多是弹窗广告和流氓捆绑的源头，这向导存在的意义就是让你不用装它们。</li>
+  </ul>
+</div>
 
-  <footer>
-    工具 #002 ｜野生 AI 工具匠 · 日常有个麻烦？我试着把它做成工具。<br/>
-    用 AI 辅助开发；不扫描你的电脑、不联网、不自动删除任何文件。所有命令默认"只看不删"，去掉 <b>-WhatIf</b> 才会真正执行删除。下一个该造什么？评论区可以点单。
-  </footer>
+<footer>
+C盘空间急救向导 · 野生工具铺 ｜ 大模型应用工程师主理<br/>
+用 AI 辅助开发；不扫描你的电脑、不联网、不自动删除任何文件。所有命令默认"只看不删"，去掉 -WhatIf 才会真正执行删除。下一个该造什么？欢迎点单。
+</footer>
 </main>
+
 <script>
 const ITEMS = [
   // 开发者
