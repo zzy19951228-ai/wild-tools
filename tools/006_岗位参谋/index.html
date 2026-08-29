@@ -206,14 +206,14 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
 <button class="big ghost" id="delAll" style="margin-top:18px">清空全部本地数据</button>
 
 <footer>
-岗位参谋 v2.3 · 野生工具铺 ｜ 大模型应用工程师主理（反馈问题时报这个版本号）<br/>
+岗位参谋 v2.4 · 野生工具铺 ｜ 大模型应用工程师主理（反馈问题时报这个版本号）<br/>
 用 AI 辅助开发；AI 解析由你自己配置的模型完成；不联网上传任何个人数据。
 </footer>
 </main>
 
 <div class="dlg" id="dlg"><div class="box">
 <button class="x" id="dlgX">✕</button>
-<h3>⚙ 模型设置 <span style="font-size:11px;color:var(--muted);font-weight:500">v2.3</span></h3>
+<h3>⚙ 模型设置 <span style="font-size:11px;color:var(--muted);font-weight:500">v2.4</span></h3>
 <p class="hint" style="margin-top:2px">配置只存在你本地浏览器，支持任何 OpenAI 兼容接口（官方 / 中转站均可）。</p>
 <label class="lb">提供商</label>
 <div class="chips" id="provChips"></div>
@@ -222,7 +222,8 @@ footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line-soft);co
 <label class="lb">API Key</label>
 <input type="password" id="cfgKey" placeholder="sk-...（只存你本地）"/>
 <label class="lb">模型</label>
-<input type="text" id="cfgModel" placeholder="deepseek-chat（自动填，可改）"/>
+<input type="text" id="cfgModel" list="modelList" placeholder="下拉选择或手动输入"/>
+<datalist id="modelList"></datalist>
 <div class="status" id="cfgStatus"></div>
 <button class="big" id="testBtn" style="margin-top:12px">🔗 测试连接</button>
 <label class="lb">我的城市（AI 按此判断通勤分）</label>
@@ -247,7 +248,9 @@ function normCity(c){return String(c||"").replace(/市$/,"").trim()}
 function st(id,cls,txt){var el=$(id);el.className="status "+cls;el.textContent=txt}
 function openDlg(){$("dlg").classList.add("on");renderProv();syncCfgFields()}
 function syncCfgFields(){$("cfgBase").value=S.cfg.base;$("cfgKey").value=S.cfg.key;$("cfgModel").value=S.cfg.model;$("cfgCity").value=S.cfg.city;$("cfgDir").value=S.cfg.dir}
-function renderProv(){$("provChips").innerHTML=Object.entries(PROV).map(function(e){return '<button class="chip'+(S.cfg.prov===e[0]?" on":"")+'" data-k="'+e[0]+'">'+e[1].label+"</button>"}).join("");$("provChips").querySelectorAll(".chip").forEach(function(c){c.onclick=function(){var k=c.dataset.k;S.cfg.prov=k;S.cfg.base=PROV[k]?PROV[k].base:"";S.cfg.model=PROV[k]?PROV[k].model:"";save();renderProv();syncCfgFields()}})}
+var MODELS={deepseek:["deepseek-chat","deepseek-reasoner"],glm:["glm-4-flash","glm-4-air","glm-4-plus"],qwen:["qwen-plus","qwen-turbo","qwen-max"],kimi:["moonshot-v1-8k","moonshot-v1-32k","kimi-latest"],openai:["gpt-4o-mini","gpt-4.1-mini","gpt-4o"],custom:[]};
+function fillModels(){var dl=$("modelList");dl.innerHTML=(MODELS[S.cfg.prov]||[]).map(function(m){return '<option value="'+m+'">'+"</option>"}).join("");}
+function renderProv(){$("provChips").innerHTML=Object.entries(PROV).map(function(e){return '<button class="chip'+(S.cfg.prov===e[0]?" on":"")+'" data-k="'+e[0]+'">'+e[1].label+"</button>"}).join("");$("provChips").querySelectorAll(".chip").forEach(function(c){c.onclick=function(){var k=c.dataset.k;S.cfg.prov=k;S.cfg.base=PROV[k]?PROV[k].base:"";S.cfg.model=PROV[k]?PROV[k].model:"";save();renderProv();fillModels();syncCfgFields()}})}
 $("cfgBtn").onclick=openDlg;
 $("dlgX").onclick=function(){$("dlg").classList.remove("on")};
 $("dlg").addEventListener("click",function(e){if(e.target.id==="dlg")$("dlg").classList.remove("on")});
@@ -255,7 +258,7 @@ var CFGMAP={cfgBase:"base",cfgKey:"key",cfgModel:"model",cfgCity:"city",cfgDir:"
 Object.keys(CFGMAP).forEach(function(id){$(id).addEventListener("input",function(){S.cfg[CFGMAP[id]]=$(id).value;save();cfgBadge()})});
 function cfgBadge(){$("cfgBtn").classList.toggle("has",!!(S.cfg.key&&S.cfg.base&&S.cfg.model))}
 function readCfgInputs(){["cfgBase","cfgKey","cfgModel","cfgCity","cfgDir"].forEach(function(id){S.cfg[CFGMAP[id]]=$(id).value.trim()});save()}
-function errHint(code,msg){if(code===401)return "key 无效或余额不足（401）";if(code===403)return "无权限（403）：key 被禁或该模型无权限";if(code===404)return "地址或模型名不对（404）：中转站常见——试试 BaseURL 去掉或补上 /v1";if(code===429)return "限流了（429），稍等半分钟再试";if(code>=500)return "服务商异常（"+code+"），稍后再试";return msg||("错误 "+code)}
+function errHint(code,msg){if(code===401)return "key 无效或余额不足（401）";if(code===403)return "无权限（403）：key 被禁或该模型无权限";if(code===404)return "地址或模型名不对（404）：中转站常见——试试 BaseURL 去掉或补上 /v1";if(code===429){return (msg&&msg.indexOf("防护")>=0)?"本站防护限流（非服务商问题），稍候再试":"服务商限流（429）：免费档模型并发低——等几秒再点一次，或换个模型试试"}if(code>=500)return "服务商异常（"+code+"），稍后再试";return msg||("错误 "+code)}
 async function llm(messages,temp){
  var r,status=0;
  try{r=await fetch("/api/llm",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({baseURL:S.cfg.base,apiKey:S.cfg.key,model:S.cfg.model,messages:messages,temperature:temp})});status=r.status}
@@ -374,7 +377,7 @@ $("askBtn").onclick=async function(){
 };
 $("delAll").onclick=function(){if(confirm("确定清空全部本地数据（岗位/权重/配置）？")){localStorage.removeItem("jobScorer2");localStorage.removeItem("jobScorerRef");location.reload()}};
 function renderAll(){renderJobs();renderRes();renderOv()}
-renderW();renderAdd();renderAll();cfgBadge();
+fillModels();renderW();renderAdd();renderAll();cfgBadge();
 </script>
 </body>
 </html>

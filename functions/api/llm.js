@@ -1,7 +1,7 @@
 // 野生工具铺 · LLM 无状态转发代理
 // key 只路过不落地；无日志；仅支持 chat/completions
 const hits = new Map();
-const RATE_LIMIT = 30, WINDOW = 60000;
+const RATE_LIMIT = 120, WINDOW = 60000;
 
 function normalizeBase(raw) {
   let u = String(raw || "").trim().replace(/\/+$/, "");
@@ -16,7 +16,7 @@ export async function onRequestPost({ request }) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
   const now = Date.now();
   const arr = (hits.get(ip) || []).filter(t => now - t < WINDOW);
-  if (arr.length >= RATE_LIMIT) return json({ error: "请求太频繁，请稍后再试" }, 429);
+  if (arr.length >= RATE_LIMIT) return json({ error: "本站防护限流（非服务商问题），请稍候再试" }, 429);
   arr.push(now); hits.set(ip, arr);
 
   let body;
